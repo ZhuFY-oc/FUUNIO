@@ -7,6 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
     <link rel="icon" type="image/png" href="./assets/fuunio-favicon.png">
     <link rel="shortcut icon" type="image/png" href="./assets/fuunio-favicon.png">
     <style>
@@ -77,9 +85,7 @@
         .logo-img {
             filter: drop-shadow(0 0 10px rgba(164, 230, 44, 0.34));
         }
-        .logo-img.using-wide-fallback {
-            width: min(172px, 32vw); max-width: 172px; object-fit: contain;
-        }
+        .logo-img.using-wide-fallback { width: min(172px, 32vw); max-width: 172px; object-fit: contain; }
         .logo-img-fallback {
             display:inline-flex; align-items:center; justify-content:center; border-radius:14px;
             color:#0f172a; font-family:'Orbitron', sans-serif; font-size:1.35rem; font-weight:900;
@@ -99,6 +105,21 @@
 
         .nav-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: transparent; color: var(--text-secondary); border-radius: 30px; font-size: 0.9rem; font-weight: 500; transition: all var(--transition-fast); }
         .nav-btn:hover { background: var(--bg-card); color: var(--text-primary); }
+
+        .auth-btn {
+            display:inline-flex; align-items:center; justify-content:center; gap:8px;
+            min-height:42px; padding:9px 16px; border-radius:14px;
+            color:#fff; font-size:0.9rem; font-weight:800; white-space:nowrap;
+            background:linear-gradient(135deg, rgba(56,189,248,0.26), rgba(164,230,44,0.28)), #101827;
+            border:1px solid rgba(125,211,252,0.45);
+            box-shadow:0 0 18px rgba(56,189,248,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
+            transition:transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+        }
+        .auth-btn:hover,
+        .auth-btn.signed-in {
+            transform:translateY(-1px); border-color:rgba(164,230,44,0.72);
+            box-shadow:0 8px 26px rgba(56,189,248,0.28), 0 0 22px rgba(164,230,44,0.22);
+        }
 
         .new-arrivals-nav,
         .blind-box-nav {
@@ -315,10 +336,17 @@
         .game-meta { display:flex; gap:6px; font-size:0.75rem; color:var(--text-muted); }
         .game-category { padding:2px 8px; background:var(--bg-secondary); border-radius:4px; font-size:0.7rem; }
 
-        .game-reactions { display:flex; gap:10px; margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.06); justify-content:center; }
-        .reaction-item { cursor:pointer; font-size:1.1rem; transition:transform 0.2s; user-select:none; }
-        .reaction-item:hover { transform:scale(1.3); }
-        .reaction-item.voted { cursor:default; opacity:0.6; }
+        .game-reactions { display:flex; gap:8px; margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.06); justify-content:center; position:relative; z-index:30; }
+        .reaction-item {
+            cursor:pointer; min-width:42px; min-height:34px; padding:4px 8px;
+            display:inline-flex; align-items:center; justify-content:center; gap:3px;
+            border-radius:12px; background:rgba(255,255,255,0.06); color:var(--text-primary);
+            font-size:1.05rem; line-height:1; transition:transform 0.2s, background 0.2s, box-shadow 0.2s;
+            user-select:none; touch-action:manipulation; position:relative; z-index:31;
+        }
+        .reaction-item:hover { transform:scale(1.12); background:rgba(56,189,248,0.16); }
+        .reaction-item.voted { opacity:1; background:rgba(56,189,248,0.18); box-shadow:0 0 0 1px rgba(56,189,248,0.28) inset; }
+        .reaction-item:disabled { cursor:wait; opacity:0.72; }
         .reaction-item.bounce { animation:reactBounce 0.3s ease; }
         @keyframes reactBounce { 0%{transform:scale(1);} 50%{transform:scale(1.4);} 100%{transform:scale(1);} }
         .reaction-item .count { font-size:0.65rem; margin-left:2px; color:var(--text-muted); }
@@ -688,7 +716,7 @@
             position:absolute; left:3px; right:3px; bottom:4px; height:3px; border-radius:999px;
             background:#a855f7; box-shadow:0 0 12px rgba(168,85,247,0.86);
         }
-        @keyframes radarSweep { to { transform:rotate(360deg); } }
+        @keyframes radarSweep { to {transform:rotate(360deg);} }
 
         .footer {
             background:var(--bg-secondary); border-top:1px solid var(--border-color);
@@ -704,6 +732,62 @@
         .footer-links a { color:var(--text-muted); font-size:0.88rem; transition:color var(--transition-fast); cursor:pointer; }
         .footer-links a:hover { color:var(--accent-blue); }
         .footer-bottom { max-width:1200px; margin:30px auto 0; padding-top:20px; border-top:1px solid var(--border-color); text-align:center; color:var(--text-muted); font-size:0.8rem; }
+        .admin-panel-entry { max-width:1200px; margin:22px auto 0; display:flex; justify-content:flex-end; }
+        .admin-stats-btn {
+            display:none; align-items:center; gap:8px; min-height:40px; padding:0 16px; border-radius:8px;
+            background:rgba(56,189,248,0.12); color:#dbeafe; border:1px solid rgba(56,189,248,0.34);
+            font-weight:800; box-shadow:0 0 18px rgba(56,189,248,0.12);
+        }
+        .admin-stats-btn:hover { color:#fff; border-color:#38bdf8; box-shadow:0 0 24px rgba(56,189,248,0.24); }
+        .stats-modal {
+            display:none; position:fixed; inset:0; z-index:4200; align-items:center; justify-content:center;
+            padding:22px; background:rgba(0,0,0,0.76); backdrop-filter:blur(10px);
+        }
+        .stats-modal.active { display:flex; }
+        .stats-panel {
+            width:min(920px, 100%); max-height:min(720px, 88vh); overflow:hidden; border-radius:14px;
+            background:#111827; border:1px solid rgba(56,189,248,0.25); box-shadow:0 24px 70px rgba(0,0,0,0.48);
+        }
+        .stats-header { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:18px 20px; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .stats-header h3 { margin:0; font-size:1.08rem; color:#fff; }
+        .stats-desc { margin:4px 0 0; color:#94a3b8; font-size:0.84rem; }
+        .stats-close { width:34px; height:34px; border-radius:8px; background:rgba(255,255,255,0.08); color:#fff; font-size:1.2rem; }
+        .stats-body { padding:18px 20px 20px; overflow:auto; max-height:calc(min(720px, 88vh) - 82px); }
+        .stats-status { color:#cbd5e1; min-height:24px; margin-bottom:12px; font-size:0.9rem; }
+        .stats-table-wrap { overflow:auto; border:1px solid rgba(148,163,184,0.18); border-radius:10px; }
+        .stats-table { width:100%; border-collapse:collapse; min-width:520px; background:rgba(15,23,42,0.7); }
+        .stats-table th, .stats-table td { padding:12px 14px; border-bottom:1px solid rgba(148,163,184,0.14); text-align:left; }
+        .stats-table th { color:#bae6fd; font-size:0.78rem; letter-spacing:0; text-transform:uppercase; background:rgba(56,189,248,0.08); }
+        .stats-table td { color:#e5e7eb; font-size:0.9rem; }
+        .stats-table tr:last-child td { border-bottom:0; }
+
+        .fufu-widget { position:fixed; right:22px; bottom:24px; z-index:1850; display:flex; flex-direction:column; align-items:flex-end; gap:10px; pointer-events:none; }
+        .fufu-stage {
+            position:relative; width:220px; height:260px; display:none; pointer-events:auto;
+            filter:drop-shadow(0 18px 30px rgba(0,0,0,0.46));
+        }
+        .fufu-widget.is-unlocked.is-visible .fufu-stage { display:block; }
+        .fufu-canvas { width:100%; height:100%; display:block; border-radius:14px; }
+        .fufu-toggle,
+        .fufu-login-prompt {
+            pointer-events:auto; display:none; align-items:center; justify-content:center; gap:8px;
+            min-height:42px; border-radius:8px; color:#fff; font-weight:900;
+            border:1px solid rgba(255,255,255,0.16); background:rgba(15,23,42,0.88);
+            box-shadow:0 12px 32px rgba(0,0,0,0.34);
+        }
+        .fufu-toggle { width:46px; padding:0; font-size:1rem; }
+        .fufu-login-prompt { padding:0 14px; color:#dbeafe; }
+        .fufu-widget.is-unlocked .fufu-toggle { display:flex; }
+        .fufu-widget.is-locked .fufu-login-prompt { display:flex; }
+        .fufu-widget.is-hidden .fufu-stage { display:none; }
+        .fufu-bubble {
+            position:absolute; right:48px; top:14px; max-width:180px; padding:9px 12px; border-radius:12px;
+            background:#fff; color:#0f172a; font-weight:900; font-size:0.82rem; line-height:1.35;
+            box-shadow:0 10px 28px rgba(0,0,0,0.25); opacity:0; transform:translateY(8px) scale(0.96);
+            transition:opacity 0.18s ease, transform 0.18s ease; pointer-events:none;
+        }
+        .fufu-bubble::after { content:''; position:absolute; right:18px; bottom:-8px; border-width:8px 7px 0; border-style:solid; border-color:#fff transparent transparent; }
+        .fufu-bubble.active { opacity:1; transform:translateY(0) scale(1); }
 
         .mobile-tabbar {
             display:none; position:fixed; bottom:0; left:0; right:0; height:60px;
@@ -1079,6 +1163,55 @@
         .site-policy-body .policy-list { margin:4px 0 12px 20px; padding:0; list-style:disc; }
         .site-policy-body .policy-list li { margin-bottom:4px; }
 
+        .auth-modal {
+            display:none; position:fixed; inset:0; z-index:4100; background:rgba(0,0,0,0.76);
+            align-items:center; justify-content:center; padding:20px;
+        }
+        .auth-modal.active { display:flex; }
+        .auth-panel {
+            width:100%; max-width:420px; background:var(--bg-secondary); border:1px solid var(--border-color);
+            border-radius:18px; box-shadow:0 24px 70px rgba(0,0,0,0.45); overflow:hidden;
+        }
+        .auth-header {
+            display:flex; align-items:center; justify-content:space-between; gap:12px;
+            padding:18px 20px; border-bottom:1px solid var(--border-color);
+        }
+        .auth-title { margin:0; font-size:1.12rem; font-weight:900; }
+        .auth-body { padding:20px; }
+        .auth-tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:16px; }
+        .auth-tab {
+            min-height:40px; border-radius:12px; background:var(--bg-card); color:var(--text-secondary);
+            font-weight:800; border:1px solid transparent;
+        }
+        .auth-tab.active {
+            color:#fff; border-color:rgba(56,189,248,0.42);
+            background:linear-gradient(135deg, rgba(56,189,248,0.22), rgba(168,85,247,0.2)), var(--bg-card);
+        }
+        .auth-form { display:flex; flex-direction:column; gap:12px; }
+        .auth-field { display:flex; flex-direction:column; gap:6px; color:var(--text-secondary); font-size:0.82rem; font-weight:700; }
+        .auth-input {
+            width:100%; min-height:44px; padding:10px 12px; border-radius:12px;
+            background:rgba(15,23,42,0.92); border:1px solid var(--border-color);
+            color:#fff; font-size:0.95rem; outline:none;
+        }
+        .auth-input:focus { border-color:var(--accent-blue); box-shadow:0 0 0 3px rgba(56,189,248,0.1); }
+        .auth-submit {
+            min-height:46px; border-radius:14px; color:#fff; font-size:0.96rem; font-weight:900;
+            background:linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            box-shadow:0 10px 28px rgba(56,189,248,0.24);
+        }
+        .auth-submit:disabled { cursor:wait; opacity:0.68; }
+        .auth-message { min-height:20px; margin:2px 0 0; color:var(--text-secondary); font-size:0.82rem; line-height:1.5; }
+        .auth-message.error { color:#fca5a5; }
+        .auth-message.success { color:#a4e62c; }
+        .auth-signed-in { display:none; padding:4px 0 0; }
+        .auth-signed-in.active { display:block; }
+        .auth-user-email { color:#fff; font-weight:800; overflow-wrap:anywhere; }
+        .auth-signout {
+            width:100%; min-height:42px; margin-top:14px; border-radius:12px;
+            background:rgba(255,255,255,0.08); color:#fff; border:1px solid rgba(255,255,255,0.12); font-weight:800;
+        }
+
         .intro-summary { font-size:0.95rem; line-height:1.7; color:var(--text-secondary); margin-bottom:16px; }
         .intro-section { margin-top:12px; }
         .intro-section-title { font-size:1rem; font-weight:700; color:#fff; margin:14px 0 6px 0; }
@@ -1262,6 +1395,15 @@
             .search-input { font-size:0.85rem; }
             .nav-btn span:last-child { display:none; }
             .new-arrivals-nav, .blind-box-nav, .dice-nav-btn { display:none; }
+            .auth-btn { min-width:40px; width:40px; height:40px; min-height:40px; padding:0; border-radius:12px; }
+            .auth-btn span { display:none; }
+            .game-reactions { gap:6px; }
+            .reaction-item { min-width:40px; min-height:34px; padding:4px 6px; font-size:1rem; }
+            .fufu-widget { right:12px; bottom:calc(78px + env(safe-area-inset-bottom,0)); }
+            .fufu-stage { width:150px; height:184px; }
+            .fufu-login-prompt { max-width:170px; min-height:38px; padding:0 11px; font-size:0.78rem; }
+            .fufu-toggle { width:40px; min-height:40px; }
+            .fufu-bubble { right:38px; max-width:142px; font-size:0.74rem; }
             .content { padding:16px; }
             .banner-carousel { height:220px; border-radius:16px; }
             .banner-slide { padding:20px; }
@@ -1472,6 +1614,9 @@
             .games-grid { gap:10px; }
             .game-thumb { height:100px; }
             .game-title { font-size:0.75rem; }
+            .game-reactions { gap:4px; }
+            .reaction-item { min-width:36px; min-height:32px; padding:3px 5px; font-size:0.95rem; border-radius:10px; }
+            .reaction-item .count { font-size:0.6rem; margin-left:1px; }
             .popularity-badge { top:6px; right:6px; padding:3px 7px; font-size:0.62rem; }
             .popularity-num-detailed { display:none; }
             .card-overlay { gap:8px; padding:8px; }
@@ -1542,6 +1687,7 @@
             <button class="game-sea-nav" id="gameSeaNavBtn" onclick="showGameSea()">🌊 <span>游戏公海</span></button>
         </div>
         <div class="nav-right">
+            <button class="auth-btn" id="authNavBtn" onclick="openAuthModal()" aria-label="登录" title="登录"><i class="fas fa-user"></i><span id="authNavText">登录</span></button>
             <button class="blind-box-nav" id="dailyBlindBoxBtn" onclick="openDailyBlindBox()">🎁 <span>每日盲盒</span></button>
             <div class="lang-switcher" id="langSwitcher">
                 <button class="lang-btn" onclick="toggleLangDropdown()"><span>🌐</span><span id="currentLang">中文</span><span>▼</span></button>
@@ -1701,7 +1847,42 @@
             <div class="footer-section"><h4 id="footerCommunityTitle">社区</h4><ul class="footer-links"><li><a onclick="showDiscordInfo(); return false;">Discord</a></li></ul></div>
         </div>
         <div class="footer-bottom"><p>© 2026 Fuunio. All rights reserved. 未经许可禁止转载、复制、镜像本站内容与代码。</p></div>
+        <div class="admin-panel-entry">
+            <button class="admin-stats-btn" id="adminStatsBtn" type="button" onclick="openStatsPanel()" style="display:none;">
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
+                后台数据面板
+            </button>
+        </div>
     </footer>
+
+    <div class="stats-modal" id="statsPanel" aria-hidden="true">
+        <div class="stats-panel" role="dialog" aria-modal="true" aria-labelledby="statsPanelTitle">
+            <div class="stats-header">
+                <div>
+                    <h3 id="statsPanelTitle">后台数据面板</h3>
+                    <p class="stats-desc">最近 30 天 daily_visits_stats 访问数据</p>
+                </div>
+                <button class="stats-close" type="button" onclick="closeStatsPanel()" aria-label="关闭">×</button>
+            </div>
+            <div class="stats-body">
+                <div class="stats-status" id="statsStatus">等待查询...</div>
+                <div class="stats-table-wrap" id="statsTableWrap"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fufu-widget is-locked" id="fufuWidget" aria-live="polite">
+        <div class="fufu-stage" id="fufuStage">
+            <canvas class="fufu-canvas" id="fufuCanvas"></canvas>
+            <div class="fufu-bubble" id="fufuBubble"></div>
+        </div>
+        <button class="fufu-toggle" id="fufuToggleBtn" type="button" onclick="toggleFufuPet()" aria-label="隐藏福福" title="隐藏福福">
+            <i class="fas fa-paw" aria-hidden="true"></i>
+        </button>
+        <button class="fufu-login-prompt" id="fufuLoginPrompt" type="button" onclick="openAuthModal()">
+            请登录解锁福福
+        </button>
+    </div>
 
     <div class="mobile-tabbar">
         <div class="tabbar-items">
@@ -1769,7 +1950,44 @@
         </div>
     </div>
 
-    <script>
+    <div class="auth-modal" id="authModal" aria-hidden="true">
+        <div class="auth-panel" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+            <div class="auth-header">
+                <h3 class="auth-title" id="authTitle">账号登录</h3>
+                <button class="modal-close" onclick="closeAuthModal()" aria-label="关闭">×</button>
+            </div>
+            <div class="auth-body">
+                <div class="auth-signed-in" id="authSignedIn">
+                    <p class="auth-message success" id="authSignedInText">已登录</p>
+                    <p class="auth-user-email" id="authUserEmail"></p>
+                    <button class="auth-signout" id="authSignOutBtn" onclick="signOutUser()">退出登录</button>
+                </div>
+                <div id="authGuestPanel">
+                    <div class="auth-tabs" role="tablist" aria-label="账号操作">
+                        <button class="auth-tab active" id="authLoginTab" type="button" onclick="setAuthMode('login')">登录</button>
+                        <button class="auth-tab" id="authSignupTab" type="button" onclick="setAuthMode('signup')">注册</button>
+                    </div>
+                    <form class="auth-form" id="authForm">
+                        <label class="auth-field">
+                            邮箱
+                            <input class="auth-input" id="authEmail" type="email" autocomplete="email" required>
+                        </label>
+                        <label class="auth-field">
+                            密码
+                            <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" minlength="6" required>
+                        </label>
+                        <button class="auth-submit" id="authSubmitBtn" type="submit">登录</button>
+                        <p class="auth-message" id="authMessage"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
         /* Fuunio (fuunio.com)
          * © 2026 Fuunio Team. All rights reserved.
          * 未经授权禁止复制、修改或用于商业用途。
@@ -4349,10 +4567,22 @@
 
         const state = { currentCategory:'all', searchQuery:'', displayedGames:12, isLoading:false, currentPage:'home' };
         const SUPABASE_URL = 'https://udoiblaukruprjnhvrql.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkb2libGF1a3J1cHJqbmh2cnFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3MzIzMTYsImV4cCI6MjA5NzMwODMxNn0.fSAyiLlAxnabZFanOiO0fY0jLvQJbZbE3h3eQuxKSjY';
-        const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+        // ⚠️ 请把下面的占位符换成你 Supabase 控制台里的 Publishable key（非 Secret key）
+        const SUPABASE_ANON_KEY = 'sb_publishable_o4CPdGtVyoFKBWQ5P9Jdpg_ohmYhktT' ;
+        const SUPABASE_CONFIG_READY = Boolean(
+            window.supabase &&
+            SUPABASE_URL &&
+            SUPABASE_ANON_KEY &&
+            !SUPABASE_ANON_KEY.includes('YOUR_')
+        );
+        const supabaseClient = SUPABASE_CONFIG_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
         const playCounts = {};
         let statsLoaded = false;
+        const REACTION_TYPES = ['love', 'meh', 'angry'];
+        const ADMIN_EMAIL = 'octopus1431@qq.com';
+        const FUFU_PET_MODEL_URL = './base_basic_pbr.glb';
+        let authMode = 'login';
+        let currentUser = null;
 
         function getGamePlayCount(gameId) {
             return Number.isFinite(playCounts[gameId]) ? playCounts[gameId] : 0;
@@ -4429,6 +4659,525 @@
             if(document.getElementById('bannerWrapper')) buildBannerSlides();
         }
 
+        function getAuthCopy() {
+            const copy = {
+                zh: {
+                    login: '登录', signup: '注册', account: '账号', authTitle: '账号登录',
+                    email: '邮箱', password: '密码', submitLogin: '登录', submitSignup: '注册',
+                    helper: '',
+                    configuring: 'Supabase publishable key 还没配置，按钮已准备好，填入 key 后即可登录注册。',
+                    working: '处理中...', signupSuccess: '注册成功，请按 Supabase 设置完成邮箱确认或直接登录。',
+                    loginSuccess: '登录成功。', signedIn: '已登录', signOut: '退出登录',
+                    signedOut: '已退出登录。'
+                },
+                en: {
+                    login: 'Log in', signup: 'Sign up', account: 'Account', authTitle: 'Account',
+                    email: 'Email', password: 'Password', submitLogin: 'Log in', submitSignup: 'Sign up',
+                    helper: 'Email/password auth is powered by Supabase and works after GitHub deployment.',
+                    configuring: 'Add your Supabase publishable key to enable login and registration.',
+                    working: 'Working...', signupSuccess: 'Sign up complete. Confirm email if your Supabase project requires it.',
+                    loginSuccess: 'Logged in.', signedIn: 'Signed in', signOut: 'Sign out',
+                    signedOut: 'Signed out.'
+                },
+                ja: {
+                    login: 'ログイン', signup: '登録', account: 'アカウント', authTitle: 'アカウント',
+                    email: 'メール', password: 'パスワード', submitLogin: 'ログイン', submitSignup: '登録',
+                    helper: 'Supabase Auth のメール/パスワード認証です。GitHub に配置した後も同じように動きます。',
+                    configuring: 'Supabase publishable key を入れるとログインと登録が有効になります。',
+                    working: '処理中...', signupSuccess: '登録しました。必要な場合は確認メールを完了してください。',
+                    loginSuccess: 'ログインしました。', signedIn: 'ログイン中', signOut: 'ログアウト',
+                    signedOut: 'ログアウトしました。'
+                }
+            };
+            return copy[currentLang] || copy.zh;
+        }
+
+        function setAuthMessage(message, type='') {
+            const el = document.getElementById('authMessage');
+            if(!el) return;
+            el.textContent = message || '';
+            el.className = `auth-message ${type}`.trim();
+        }
+
+        function updateAuthUI() {
+            const copy = getAuthCopy();
+            const navBtn = document.getElementById('authNavBtn');
+            const navText = document.getElementById('authNavText');
+            if(navText) navText.textContent = currentUser ? copy.account : copy.login;
+            if(navBtn) {
+                navBtn.classList.toggle('signed-in', Boolean(currentUser));
+                navBtn.setAttribute('aria-label', currentUser ? copy.account : copy.login);
+                navBtn.setAttribute('title', currentUser ? copy.account : copy.login);
+            }
+            const authTitle = document.getElementById('authTitle');
+            if(authTitle) authTitle.textContent = currentUser ? copy.account : copy.authTitle;
+            const loginTab = document.getElementById('authLoginTab');
+            const signupTab = document.getElementById('authSignupTab');
+            if(loginTab) loginTab.textContent = copy.login;
+            if(signupTab) signupTab.textContent = copy.signup;
+            const submitBtn = document.getElementById('authSubmitBtn');
+            if(submitBtn) submitBtn.textContent = authMode === 'signup' ? copy.submitSignup : copy.submitLogin;
+            const signedIn = document.getElementById('authSignedIn');
+            const guestPanel = document.getElementById('authGuestPanel');
+            if(signedIn) signedIn.classList.toggle('active', Boolean(currentUser));
+            if(guestPanel) guestPanel.style.display = currentUser ? 'none' : 'block';
+            const signedInText = document.getElementById('authSignedInText');
+            if(signedInText) signedInText.textContent = copy.signedIn;
+            const email = document.getElementById('authUserEmail');
+            if(email) email.textContent = currentUser && currentUser.email ? currentUser.email : '';
+            const signOutBtn = document.getElementById('authSignOutBtn');
+            if(signOutBtn) signOutBtn.textContent = copy.signOut;
+            if(!currentUser) setAuthMessage(supabaseClient ? copy.helper : copy.configuring, supabaseClient ? '' : 'error');
+            updateAdminUI();
+            updateFufuAuthState();
+        }
+
+        function updateUserUI() {
+            updateAuthUI();
+        }
+
+        function setAuthMode(mode) {
+            authMode = mode === 'signup' ? 'signup' : 'login';
+            document.getElementById('authLoginTab')?.classList.toggle('active', authMode === 'login');
+            document.getElementById('authSignupTab')?.classList.toggle('active', authMode === 'signup');
+            const password = document.getElementById('authPassword');
+            if(password) password.autocomplete = authMode === 'signup' ? 'new-password' : 'current-password';
+            updateAuthUI();
+        }
+
+        function openAuthModal() {
+            const modal = document.getElementById('authModal');
+            if(!modal) return;
+            updateAuthUI();
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            if(!currentUser) setTimeout(() => document.getElementById('authEmail')?.focus(), 30);
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('authModal');
+            if(!modal) return;
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        async function initAuth() {
+            updateAuthUI();
+            if(!supabaseClient) return;
+            const { data, error } = await supabaseClient.auth.getSession();
+            if(error) console.warn('Failed to read auth session:', error.message);
+            currentUser = data && data.session ? data.session.user : null;
+            updateAuthUI();
+            supabaseClient.auth.onAuthStateChange((_event, session) => {
+                currentUser = session ? session.user : null;
+                updateAuthUI();
+            });
+        }
+
+        async function handleAuthSubmit(e) {
+            e.preventDefault();
+            const copy = getAuthCopy();
+            if(!supabaseClient) {
+                setAuthMessage(copy.configuring, 'error');
+                return;
+            }
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const email = document.getElementById('authEmail')?.value.trim();
+            const password = document.getElementById('authPassword')?.value;
+            if(submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = copy.working;
+            }
+            setAuthMessage(copy.working);
+            try {
+                const result = authMode === 'signup'
+                    ? await supabaseClient.auth.signUp({ email, password })
+                    : await supabaseClient.auth.signInWithPassword({ email, password });
+                if(result.error) throw result.error;
+                currentUser = result.data && result.data.user ? result.data.user : currentUser;
+                setAuthMessage(authMode === 'signup' ? copy.signupSuccess : copy.loginSuccess, 'success');
+                updateAuthUI();
+            } catch(err) {
+                setAuthMessage(err && err.message ? err.message : 'Auth request failed.', 'error');
+            } finally {
+                if(submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = authMode === 'signup' ? copy.submitSignup : copy.submitLogin;
+                }
+            }
+        }
+
+        async function signOutUser() {
+            const copy = getAuthCopy();
+            if(supabaseClient) {
+                const { error } = await supabaseClient.auth.signOut();
+                if(error) {
+                    setAuthMessage(error.message, 'error');
+                    return;
+                }
+            }
+            currentUser = null;
+            updateAuthUI();
+            setAuthMessage(copy.signedOut, 'success');
+        }
+
+        function updateAdminUI() {
+            const btn = document.getElementById('adminStatsBtn');
+            const isAdmin = Boolean(currentUser && currentUser.email && currentUser.email.toLowerCase() === ADMIN_EMAIL);
+            if(btn) btn.style.display = isAdmin ? 'inline-flex' : 'none';
+            if(!isAdmin) closeStatsPanel();
+        }
+
+        async function trackDailyVisit() {
+            if(!supabaseClient) return;
+            const today = new Date().toISOString().slice(0, 10);
+            const deviceId = getDeviceId();
+            const key = `fuunio_daily_visit_${today}`;
+            if(localStorage.getItem(key) === deviceId) return;
+            const payload = { visit_date: today, user_device_id: deviceId };
+            if(currentUser && currentUser.id) payload.user_id = currentUser.id;
+            const { error } = await supabaseClient.from('daily_visits').insert(payload);
+            if(error) {
+                if(/table|schema cache/i.test(error.message || '')) {
+                    console.warn('Failed to track daily visit:', error.message);
+                    return;
+                }
+                const fallback = { visit_date: today, device_id: deviceId };
+                if(currentUser && currentUser.id) fallback.user_id = currentUser.id;
+                const { error: fallbackError } = await supabaseClient.from('daily_visits').insert(fallback);
+                if(fallbackError) {
+                    console.warn('Failed to track daily visit:', fallbackError.message);
+                    return;
+                }
+            }
+            localStorage.setItem(key, deviceId);
+        }
+
+        function formatStatsDate(value) {
+            if(!value) return '-';
+            const date = new Date(value);
+            if(Number.isNaN(date.getTime())) return String(value);
+            return date.toLocaleDateString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit' });
+        }
+
+        function pickStatsValue(row, keys) {
+            for(const key of keys) {
+                if(row && row[key] !== undefined && row[key] !== null) return row[key];
+            }
+            return 0;
+        }
+
+        async function openStatsPanel() {
+            const panel = document.getElementById('statsPanel');
+            const status = document.getElementById('statsStatus');
+            const wrap = document.getElementById('statsTableWrap');
+            if(!panel || !status || !wrap) return;
+            if(!currentUser || currentUser.email.toLowerCase() !== ADMIN_EMAIL) {
+                alert('仅管理员可查看后台数据面板');
+                return;
+            }
+            panel.classList.add('active');
+            panel.setAttribute('aria-hidden', 'false');
+            status.textContent = '正在查询最近 30 天数据...';
+            wrap.innerHTML = '';
+            if(!supabaseClient) {
+                status.textContent = 'Supabase 尚未配置，无法查询。';
+                return;
+            }
+            const since = new Date();
+            since.setDate(since.getDate() - 29);
+            const sinceText = since.toISOString().slice(0, 10);
+            const { data, error } = await supabaseClient
+                .from('daily_visits_stats')
+                .select('*')
+                .gte('visit_date', sinceText)
+                .order('visit_date', { ascending:false })
+                .limit(30);
+            if(error) {
+                status.textContent = `查询失败：${error.message}`;
+                return;
+            }
+            const rows = data || [];
+            status.textContent = rows.length ? `共 ${rows.length} 条记录` : '最近 30 天暂无访问数据。';
+            if(!rows.length) return;
+            wrap.innerHTML = `
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>访问次数</th>
+                            <th>独立访客</th>
+                            <th>登录用户</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows.map(row => `
+                            <tr>
+                                <td>${escapeHTML(formatStatsDate(row.visit_date || row.date || row.day))}</td>
+                                <td>${Number(pickStatsValue(row, ['visit_count', 'visits', 'total_visits', 'pv'])).toLocaleString()}</td>
+                                <td>${Number(pickStatsValue(row, ['unique_visitors', 'visitor_count', 'uv', 'devices'])).toLocaleString()}</td>
+                                <td>${Number(pickStatsValue(row, ['signed_in_users', 'login_users', 'user_count', 'users'])).toLocaleString()}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function closeStatsPanel() {
+            const panel = document.getElementById('statsPanel');
+            if(!panel) return;
+            panel.classList.remove('active');
+            panel.setAttribute('aria-hidden', 'true');
+        }
+
+        const fufuPet = {
+            initialized:false,
+            loading:false,
+            visible:localStorage.getItem('fufuPetVisible') !== 'false',
+            wasHidden:false,
+            scene:null,
+            camera:null,
+            renderer:null,
+            model:null,
+            head:null,
+            baseY:0,
+            mouse:{ x:0, y:0 },
+            target:{ x:0, y:0 },
+            tweens:[],
+            idleTimer:null,
+            idleSince:Date.now(),
+            idleMode:false,
+            lastIdleAction:0,
+            clock:null,
+            bubbleTimer:null
+        };
+
+        function initFufuPet() {
+            if(fufuPet.initialized || fufuPet.loading) return;
+            const canvas = document.getElementById('fufuCanvas');
+            const stage = document.getElementById('fufuStage');
+            if(!canvas || !stage) return;
+            fufuPet.loading = true;
+            fufuPet.scene = new THREE.Scene();
+            fufuPet.camera = new THREE.PerspectiveCamera(30, stage.clientWidth / Math.max(stage.clientHeight, 1), 0.1, 100);
+            fufuPet.camera.position.set(0, 0.65, 4.8);
+            fufuPet.camera.lookAt(0, 0.22, 0);
+            fufuPet.renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+            fufuPet.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            fufuPet.renderer.setSize(stage.clientWidth, stage.clientHeight, false);
+            fufuPet.renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+            const hemi = new THREE.HemisphereLight(0xffffff, 0x24304f, 1.6);
+            const key = new THREE.DirectionalLight(0xffffff, 1.65);
+            const fill = new THREE.DirectionalLight(0x7dd3fc, 0.65);
+            key.position.set(3, 4, 5);
+            fill.position.set(-3, 2, 3);
+            fufuPet.scene.add(hemi, key, fill);
+
+            new GLTFLoader().load(FUFU_PET_MODEL_URL, gltf => {
+                fufuPet.model = gltf.scene;
+                fitFufuModel(fufuPet.model);
+                fufuPet.head = findFufuHeadNode(fufuPet.model);
+                fufuPet.scene.add(fufuPet.model);
+                fufuPet.clock = new THREE.Clock();
+                fufuPet.initialized = true;
+                fufuPet.loading = false;
+                showFufuBubble('福福上线！', 1600);
+                requestAnimationFrame(animateFufuPet);
+            }, undefined, err => {
+                console.warn('Failed to load Fufu pet model:', err);
+                fufuPet.loading = false;
+                showFufuBubble('模型加载失败', 2200);
+            });
+        }
+
+        function fitFufuModel(model) {
+            const box = new THREE.Box3().setFromObject(model);
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+            const maxAxis = Math.max(size.x, size.y, size.z) || 1;
+            const scale = 1.9 / maxAxis;
+            model.scale.setScalar(scale);
+            model.position.set(-center.x * scale, -center.y * scale - 0.04, -center.z * scale);
+            fufuPet.baseY = model.position.y;
+            model.rotation.set(0.03, 0, 0);
+        }
+
+        function findFufuHeadNode(model) {
+            let found = null;
+            const nameRe = /head|face|eye|neck|耳|头|脸/i;
+            model.traverse(node => {
+                if(!found && node.isObject3D && nameRe.test(node.name || '')) found = node;
+            });
+            return found && found !== model ? found : null;
+        }
+
+        function updateFufuAuthState() {
+            const widget = document.getElementById('fufuWidget');
+            const toggle = document.getElementById('fufuToggleBtn');
+            if(!widget) return;
+            const unlocked = Boolean(currentUser);
+            widget.classList.toggle('is-unlocked', unlocked);
+            widget.classList.toggle('is-locked', !unlocked);
+            widget.classList.toggle('is-visible', unlocked && fufuPet.visible);
+            widget.classList.toggle('is-hidden', unlocked && !fufuPet.visible);
+            if(toggle) {
+                const label = fufuPet.visible ? '隐藏福福' : '显示福福';
+                toggle.setAttribute('aria-label', label);
+                toggle.setAttribute('title', label);
+                toggle.innerHTML = fufuPet.visible ? '<i class="fas fa-eye-slash" aria-hidden="true"></i>' : '<i class="fas fa-eye" aria-hidden="true"></i>';
+            }
+            if(unlocked && fufuPet.visible) initFufuPet();
+        }
+
+        function toggleFufuPet() {
+            fufuPet.visible = !fufuPet.visible;
+            localStorage.setItem('fufuPetVisible', fufuPet.visible ? 'true' : 'false');
+            updateFufuAuthState();
+            if(fufuPet.visible) showFufuBubble('我回来啦！', 1400);
+        }
+
+        function resizeFufuPet() {
+            if(!fufuPet.renderer || !fufuPet.camera) return;
+            const stage = document.getElementById('fufuStage');
+            if(!stage) return;
+            const width = Math.max(stage.clientWidth, 1);
+            const height = Math.max(stage.clientHeight, 1);
+            fufuPet.camera.aspect = width / height;
+            fufuPet.camera.updateProjectionMatrix();
+            fufuPet.renderer.setSize(width, height, false);
+        }
+
+        function addFufuTween(target, to, duration=420, ease='out') {
+            const from = {};
+            Object.keys(to).forEach(key => { from[key] = target[key]; });
+            fufuPet.tweens.push({ target, from, to, duration, start:performance.now(), ease });
+        }
+
+        function tickFufuTweens(now) {
+            fufuPet.tweens = fufuPet.tweens.filter(tween => {
+                const raw = Math.min((now - tween.start) / tween.duration, 1);
+                const eased = tween.ease === 'inOut'
+                    ? raw < 0.5 ? 2 * raw * raw : 1 - Math.pow(-2 * raw + 2, 2) / 2
+                    : 1 - Math.pow(1 - raw, 3);
+                Object.keys(tween.to).forEach(key => {
+                    tween.target[key] = tween.from[key] + (tween.to[key] - tween.from[key]) * eased;
+                });
+                return raw < 1;
+            });
+        }
+
+        function animateFufuPet(now=performance.now()) {
+            if(!fufuPet.initialized || !fufuPet.renderer || !fufuPet.scene || !fufuPet.camera) return;
+            const dt = fufuPet.clock ? fufuPet.clock.getDelta() : 0.016;
+            tickFufuTweens(now);
+            const model = fufuPet.model;
+            if(model) {
+                const idle = fufuPet.idleMode;
+                const floatY = idle ? Math.sin(now * 0.0022) * 0.08 : Math.sin(now * 0.0015) * 0.025;
+                model.position.y += (fufuPet.baseY + floatY - model.position.y) * Math.min(dt * 5, 1);
+                fufuPet.target.x += (fufuPet.mouse.x - fufuPet.target.x) * Math.min(dt * 6, 1);
+                fufuPet.target.y += (fufuPet.mouse.y - fufuPet.target.y) * Math.min(dt * 6, 1);
+                const maxY = THREE.MathUtils.degToRad(18);
+                const maxX = THREE.MathUtils.degToRad(10);
+                model.rotation.y += (fufuPet.target.x * maxY - model.rotation.y) * Math.min(dt * 5, 1);
+                model.rotation.x += ((0.03 - fufuPet.target.y * maxX) - model.rotation.x) * Math.min(dt * 5, 1);
+                if(fufuPet.head) {
+                    fufuPet.head.rotation.y += (fufuPet.target.x * maxY * 0.9 - fufuPet.head.rotation.y) * Math.min(dt * 7, 1);
+                    fufuPet.head.rotation.x += (-fufuPet.target.y * maxX * 0.9 - fufuPet.head.rotation.x) * Math.min(dt * 7, 1);
+                }
+                if(idle && now - fufuPet.lastIdleAction > 2400) {
+                    fufuPet.lastIdleAction = now;
+                    Math.random() > 0.5 ? fufuNod() : fufuTilt();
+                }
+            }
+            fufuPet.renderer.render(fufuPet.scene, fufuPet.camera);
+            requestAnimationFrame(animateFufuPet);
+        }
+
+        function resetFufuIdleTimer() {
+            fufuPet.idleSince = Date.now();
+            if(fufuPet.idleMode) fufuPet.idleMode = false;
+            clearTimeout(fufuPet.idleTimer);
+            fufuPet.idleTimer = setTimeout(() => {
+                fufuPet.idleMode = true;
+                fufuPet.lastIdleAction = 0;
+            }, 10000);
+        }
+
+        function fufuNod() {
+            if(!fufuPet.model) return;
+            const target = fufuPet.head || fufuPet.model;
+            addFufuTween(target.rotation, { x:target.rotation.x - 0.28 }, 260, 'inOut');
+            setTimeout(() => addFufuTween(target.rotation, { x:0.03 }, 320, 'out'), 270);
+        }
+
+        function fufuTilt() {
+            if(!fufuPet.model) return;
+            const target = fufuPet.head || fufuPet.model;
+            const next = Math.random() > 0.5 ? 0.22 : -0.22;
+            addFufuTween(target.rotation, { z:next }, 320, 'inOut');
+            setTimeout(() => addFufuTween(target.rotation, { z:0 }, 360, 'out'), 520);
+        }
+
+        function triggerFufuJumpSpin() {
+            if(!currentUser || !fufuPet.visible) return;
+            initFufuPet();
+            if(!fufuPet.model) return;
+            const model = fufuPet.model;
+            addFufuTween(model.position, { y:fufuPet.baseY + 0.42 }, 250, 'out');
+            addFufuTween(model.rotation, { y:model.rotation.y + Math.PI * 2 }, 1000, 'inOut');
+            addFufuTween(model.scale, { x:model.scale.x * 1.08, y:model.scale.y * 0.94, z:model.scale.z * 1.08 }, 180, 'out');
+            setTimeout(() => {
+                addFufuTween(model.position, { y:fufuPet.baseY }, 360, 'out');
+                addFufuTween(model.scale, { x:model.scale.x / 1.08, y:model.scale.y / 0.94, z:model.scale.z / 1.08 }, 260, 'out');
+            }, 260);
+        }
+
+        function showFufuBubble(text, duration=2000) {
+            const bubble = document.getElementById('fufuBubble');
+            if(!bubble || !currentUser || !fufuPet.visible) return;
+            bubble.textContent = text;
+            bubble.classList.add('active');
+            clearTimeout(fufuPet.bubbleTimer);
+            fufuPet.bubbleTimer = setTimeout(() => bubble.classList.remove('active'), duration);
+        }
+
+        function showFufuWelcomeBack() {
+            const messages = ['欢迎回来！', '刚好想你了。', '继续开玩吧！', '福福守住首页啦！'];
+            showFufuBubble(messages[Math.floor(Math.random() * messages.length)], 2000);
+        }
+
+        function handleFufuMouseMove(e) {
+            const x = (e.clientX / Math.max(window.innerWidth, 1)) * 2 - 1;
+            const y = (e.clientY / Math.max(window.innerHeight, 1)) * 2 - 1;
+            fufuPet.mouse.x = Math.max(-1, Math.min(1, x));
+            fufuPet.mouse.y = Math.max(-1, Math.min(1, y));
+            resetFufuIdleTimer();
+        }
+
+        function initFufuInteractions() {
+            ['mousemove', 'keydown', 'pointerdown', 'touchstart', 'scroll'].forEach(eventName => {
+                window.addEventListener(eventName, eventName === 'mousemove' ? handleFufuMouseMove : resetFufuIdleTimer, { passive:true });
+            });
+            document.addEventListener('click', e => {
+                const link = e.target.closest('a[target="_blank"], .card-btn-play, .blind-play-link');
+                if(link) triggerFufuJumpSpin();
+            });
+            document.addEventListener('visibilitychange', () => {
+                if(document.hidden) {
+                    fufuPet.wasHidden = true;
+                    return;
+                }
+                if(fufuPet.wasHidden) {
+                    fufuPet.wasHidden = false;
+                    showFufuWelcomeBack();
+                }
+            });
+            resetFufuIdleTimer();
+        }
+
         function toggleLangDropdown() { document.getElementById('langDropdown').classList.toggle('active'); }
         function switchLanguage(lang) {
             if(lang===currentLang) { toggleLangDropdown(); return; }
@@ -4449,6 +5198,7 @@
                     updateModalButtons();
                     refreshActiveGameModal();
                 }
+                loadReactions();
             }, 200);
             localStorage.setItem('preferredLang', lang);
         }
@@ -4542,6 +5292,7 @@
                 document.getElementById('modalDesc').textContent = t.modalDefaultDesc;
             }
             updateSidebarToggleLabel();
+            updateAuthUI();
         }
 
         function setActivePage(page) {
@@ -5073,6 +5824,136 @@
         function startBannerAutoPlay() { if(bannerInterval) clearInterval(bannerInterval); bannerInterval = setInterval(nextBanner, 4000); }
         function stopBannerAutoPlay() { clearInterval(bannerInterval); }
 
+        // ==============================
+        // 🔥 云端表情同步相关代码
+        // ==============================
+
+        // 获取/生成设备唯一ID
+        function getDeviceId() {
+            let id = localStorage.getItem('fuunio_device_id');
+            if (!id) {
+                id = 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('fuunio_device_id', id);
+            }
+            return id;
+        }
+
+        function getReactionCountsFromDom(gameId) {
+            const counts = { love: 0, meh: 0, angry: 0 };
+            const container = document.querySelector(`.game-reactions[data-game-id="${gameId}"]`);
+            if(!container) return counts;
+            container.querySelectorAll('.reaction-item').forEach(item => {
+                const type = item.dataset.reaction;
+                counts[type] = Number(item.querySelector('.count')?.textContent) || 0;
+            });
+            return counts;
+        }
+
+        function applyReactionState(gameId, counts, userVote) {
+            document.querySelectorAll(`.game-reactions[data-game-id="${gameId}"]`).forEach(el => {
+                el.querySelectorAll('.reaction-item').forEach(item => {
+                    const type = item.dataset.reaction;
+                    item.querySelector('.count').textContent = counts[type] || 0;
+                    item.classList.toggle('voted', userVote === type);
+                    item.setAttribute('aria-pressed', userVote === type ? 'true' : 'false');
+                });
+            });
+        }
+
+        // 从 Supabase 加载所有反应，更新显示及用户投票状态
+        async function loadReactions() {
+            if (!supabaseClient) {
+                document.querySelectorAll('.game-reactions').forEach(el => {
+                    applyReactionState(el.dataset.gameId, { love: 0, meh: 0, angry: 0 }, null);
+                });
+                return;
+            }
+            const deviceId = getDeviceId();
+            const { data, error } = await supabaseClient.from('game_reactions').select('game_id, reaction_type, user_device_id');
+            if (error) {
+                console.warn('加载表情失败:', error.message);
+                return;
+            }
+            const counts = {};
+            const userVotes = {}; // game_id -> reaction_type
+            data.forEach(row => {
+                const gameId = row.game_id;
+                if (!counts[gameId]) counts[gameId] = { love: 0, meh: 0, angry: 0 };
+                if (row.reaction_type) counts[gameId][row.reaction_type]++;
+                if (row.user_device_id === deviceId) {
+                    userVotes[gameId] = row.reaction_type;
+                }
+            });
+            document.querySelectorAll('.game-reactions').forEach(el => {
+                const gameId = el.dataset.gameId;
+                const c = counts[gameId] || { love: 0, meh: 0, angry: 0 };
+                const userVote = userVotes[gameId] || null;
+                applyReactionState(gameId, c, userVote);
+            });
+        }
+
+        // 处理点击表情（取消/切换）
+        async function handleReactionClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const item = e.currentTarget;
+            const container = item.closest('.game-reactions');
+            if(!container || item.disabled) return;
+            const gameId = container.dataset.gameId;
+            const type = item.dataset.reaction;
+            const deviceId = getDeviceId();
+            const previousVote = container.querySelector('.reaction-item.voted')?.dataset.reaction || null;
+            const nextVote = previousVote === type ? null : type;
+            const counts = getReactionCountsFromDom(gameId);
+            if(previousVote && counts[previousVote] > 0) counts[previousVote]--;
+            if(nextVote) counts[nextVote] = (counts[nextVote] || 0) + 1;
+            applyReactionState(gameId, counts, nextVote);
+            item.classList.add('bounce');
+            setTimeout(() => item.classList.remove('bounce'), 300);
+
+            if(!supabaseClient) return;
+            item.disabled = true;
+
+            // 查询当前设备对该游戏已有的反应
+            const { data: existing, error: lookupError } = await supabaseClient
+                .from('game_reactions')
+                .select('id, reaction_type')
+                .eq('game_id', gameId)
+                .eq('user_device_id', deviceId);
+            if(lookupError) {
+                console.warn('Failed to read reaction:', lookupError.message);
+                item.disabled = false;
+                return;
+            }
+
+            // 如果已经点了相同的表情 -> 取消
+            if (existing && existing.length > 0 && existing[0].reaction_type === type) {
+                const { error } = await supabaseClient.from('game_reactions').delete().eq('id', existing[0].id);
+                if(error) console.warn('Failed to delete reaction:', error.message);
+            } else {
+                // 如果点了不同的表情，先删旧的，再插新的
+                if (existing && existing.length > 0) {
+                    const { error } = await supabaseClient.from('game_reactions').delete().eq('id', existing[0].id);
+                    if(error) console.warn('Failed to replace reaction:', error.message);
+                }
+                const { error } = await supabaseClient.from('game_reactions').insert({
+                    game_id: gameId,
+                    user_device_id: deviceId,
+                    reaction_type: type
+                });
+                if(error) console.warn('Failed to insert reaction:', error.message);
+            }
+
+            // 重新加载反应
+            item.disabled = false;
+            loadReactions();
+            // 添加弹跳动画
+        }
+
+        // ==============================
+        // 🔥 渲染游戏卡片（已移除 localStorage 逻辑，改用云端同步）
+        // ==============================
+
         function renderGames(games, append=false) {
             let grid = document.getElementById('gamesGrid');
             if(!append) grid.innerHTML = '';
@@ -5101,9 +5982,9 @@
                         <h3 class="game-title">${game.name}</h3>
                         <div class="game-meta"><span class="game-category">${game.tags[0]}</span></div>
                         <div class="game-reactions" data-game-id="${game.id}">
-                            <span class="reaction-item" data-reaction="love">😍 <span class="count">0</span></span>
-                            <span class="reaction-item" data-reaction="meh">😐 <span class="count">0</span></span>
-                            <span class="reaction-item" data-reaction="angry">😡 <span class="count">0</span></span>
+                            <button class="reaction-item" type="button" data-reaction="love" aria-label="love" aria-pressed="false">😍 <span class="count">0</span></button>
+                            <button class="reaction-item" type="button" data-reaction="meh" aria-label="meh" aria-pressed="false">😐 <span class="count">0</span></button>
+                            <button class="reaction-item" type="button" data-reaction="angry" aria-label="angry" aria-pressed="false">😡 <span class="count">0</span></button>
                         </div>
                     </div>
                 `;
@@ -5123,25 +6004,10 @@
                     }
                 });
                 grid.appendChild(card);
-            });
-            document.querySelectorAll('.game-reactions').forEach(container=>{
-                let gameId = container.dataset.gameId;
-                let counts = JSON.parse(localStorage.getItem('react_'+gameId)) || {love:0, meh:0, angry:0};
-                let voted = localStorage.getItem('voted_'+gameId);
-                container.querySelectorAll('.reaction-item').forEach(item=>{
-                    let type = item.dataset.reaction;
-                    item.querySelector('.count').textContent = counts[type]||0;
-                    if(voted===type) item.classList.add('voted');
-                    item.addEventListener('click', (e)=>{
-                        e.stopPropagation();
-                        if(localStorage.getItem('voted_'+gameId)) return;
-                        counts[type] = (counts[type]||0)+1;
-                        localStorage.setItem('react_'+gameId, JSON.stringify(counts));
-                        localStorage.setItem('voted_'+gameId, type);
-                        item.querySelector('.count').textContent = counts[type];
-                        item.classList.add('bounce','voted');
-                        setTimeout(()=>item.classList.remove('bounce'),300);
-                    });
+
+                // 为当前卡片的反应按钮绑定云端点击事件
+                card.querySelectorAll('.reaction-item').forEach(item => {
+                    item.addEventListener('click', handleReactionClick);
                 });
             });
         }
@@ -5176,6 +6042,7 @@
                 let games=filterGames();
                 renderGames(games.slice(0,state.displayedGames));
                 updateLoadMoreBtn(games.length);
+                loadReactions();
             },200);
             if(window.innerWidth<=1024) toggleSidebar(false);
         }
@@ -5188,6 +6055,7 @@
                 let games=filterGames();
                 renderGames(games.slice(0,state.displayedGames));
                 updateLoadMoreBtn(games.length);
+                loadReactions();
             },200);
         }
 
@@ -5200,6 +6068,7 @@
                 let games=filterGames();
                 renderGames(games.slice(0,state.displayedGames));
                 updateLoadMoreBtn(games.length);
+                loadReactions();
             },200);
         }
 
@@ -5518,6 +6387,7 @@
         function playGame(id) {
             let g = GAMES_DATA.find(g=>g.id===id);
             if(!g) return;
+            triggerFufuJumpSpin();
             incrementPlayCount(g.id);
             safeOpenExternal(g.url);
         }
@@ -5532,6 +6402,7 @@
                 let games = filterGames();
                 renderGames(games.slice(0, state.displayedGames), true);
                 updateLoadMoreBtn(games.length);
+                loadReactions();
                 state.isLoading = false;
                 btn.textContent = orig;
             }, 400);
@@ -5582,8 +6453,47 @@
             updateSidebarToggleLabel();
         }
 
+        Object.assign(window, {
+            fufuPet,
+            initFufuPet,
+            toggleFufuPet,
+            toggleSidebar,
+            resetToHome,
+            rollDice,
+            showNewArrivals,
+            showInterestCamp,
+            showCreativeMarket,
+            showGameSea,
+            openAuthModal,
+            closeAuthModal,
+            setAuthMode,
+            signOutUser,
+            openDailyBlindBox,
+            closeDailyBlindBox,
+            openBlindBoxResult,
+            toggleLangDropdown,
+            switchLanguage,
+            filterByCategory,
+            handleSearch,
+            prevBanner,
+            nextBanner,
+            loadMoreGames,
+            showGameInfo,
+            playGame,
+            closeModal,
+            showSitePolicy,
+            closeSitePolicyModal,
+            showDiscordInfo,
+            openStatsPanel,
+            closeStatsPanel
+        });
+
         document.addEventListener('DOMContentLoaded', ()=>{
             initSidebarState();
+            initAuth();
+            trackDailyVisit();
+            updateUserUI();
+            initFufuInteractions();
             renderCreativeMarket();
             renderNewArrivals();
             renderInterestResources();
@@ -5595,6 +6505,8 @@
                 let games=filterGames();
                 renderGames(games.slice(0,state.displayedGames));
                 updateLoadMoreBtn(games.length);
+                // 🔥 在这里加载云端表情
+                loadReactions();
             });
             document.getElementById('gameModal').addEventListener('click', function(e){
                 if(e.target===this) closeModal();
@@ -5602,10 +6514,15 @@
             document.getElementById('dailyBlindModal').addEventListener('click', function(e){
                 if(e.target===this) closeDailyBlindBox();
             });
+            document.getElementById('authModal').addEventListener('click', function(e){
+                if(e.target===this) closeAuthModal();
+            });
+            document.getElementById('authForm').addEventListener('submit', handleAuthSubmit);
             document.addEventListener('keydown', e=>{
                 if(e.key==='Escape'){
                     closeModal();
                     closeDailyBlindBox();
+                    closeAuthModal();
                     document.getElementById('langDropdown').classList.remove('active');
                     if(window.innerWidth<=1024) toggleSidebar(false);
                 }
@@ -5638,3 +6555,4 @@
     </script>
 </body>
 </html>
+
