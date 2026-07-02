@@ -1,4 +1,4 @@
-        /* Fuunio (fuunio.com)
+﻿        /* Fuunio (fuunio.com)
          * © 2026 Fuunio Team. All rights reserved.
          * 未经授权禁止复制、修改或用于商业用途。
          */
@@ -511,23 +511,29 @@
                     'Taming': '生存驯龙，建造家园',
                     '神庙逃亡': '跑酷躲避，逃离神庙',
                     '极速矢量': '矢量风格跑酷',
-                    '黑洞吞噬': '黑洞吞噬，越来越大',
                     '维京战争': '维京主题策略对战',
                     '什么能打败岩石': '趣味问答，脑洞大开',
                     '半挂车停车': '模拟驾驶，精确停车',
                     '画物理线条': '物理画线，解决谜题',
                     'ZombsRoyale': '大逃杀射击游戏',
                     'Zombs.io': '塔防策略，抵御僵尸',
-                    '1v1.lol': '建造射击，一决胜负',
                     '2048': '数字合并，益智挑战',
                     'Agar.io': '细胞吞噬，逐渐壮大',
                     'Amogus.io': '太空狼人杀，推理社交',
                     'Bonk.io': '物理碰撞，欢乐对战',
                     'Copter.io': '直升机空战，升级射击',
-                    'CraftMine.io': '挖矿合成，生存建造',
                     'Defly.io': '直升机领地争夺',
                     'Drift.io': '漂移赛车，竞速挑战',
-                    'Gomoku.com': '在线五子棋对战，经典黑白博弈'
+                    'Gomoku.com': '在线五子棋对战，经典黑白博弈',
+                    'YORG.io': '建造基地、铺设资源链并抵御夜晚攻势',
+                    '找色差': '在色块矩阵中找出不同颜色，考验眼力',
+                    'Draw a Fish': '画一条鱼，看它进入在线鱼池',
+                    'Killline': '俯视角射击生存，搜装备并留到最后',
+                    '掷硬币': '在线抛硬币，快速做随机决定',
+                    '在线转盘': '自定义选项转盘，适合抽签和选择困难',
+                    '生命游戏': '康威生命游戏模拟器，观察细胞自动演化',
+                    '打砖块': '控制挡板反弹小球，击碎屏幕里的砖块',
+                    '连点成线': '按顺序连接圆点，逐步画出隐藏图案'
                 },
                 gameTags: {
                     '休闲': '休闲',
@@ -741,23 +747,29 @@
                     'Taming': 'Survival, tame dragons',
                     '神庙逃亡': 'Temple run escape',
                     '极速矢量': 'Vector style parkour',
-                    '黑洞吞噬': 'Black hole swallow',
                     '维京战争': 'Viking strategy war',
                     '什么能打败岩石': 'Fun Q&A brain teasers',
                     '半挂车停车': 'Semi-trailer parking simulation',
                     '画物理线条': 'Physics drawing puzzle',
                     'ZombsRoyale': 'Battle royale shooter',
                     'Zombs.io': 'Tower defense vs zombies',
-                    '1v1.lol': 'Build and shoot duel',
                     '2048': 'Merge numbers puzzle',
                     'Agar.io': 'Eat and grow',
                     'Amogus.io': 'Space impostor deduction',
                     'Bonk.io': 'Physics brawl party',
                     'Copter.io': 'Helicopter aerial fight',
-                    'CraftMine.io': 'Mining & crafting survival',
                     'Defly.io': 'Helicopter territory fight',
                     'Drift.io': 'Drift racing challenge',
-                    'Gomoku.com': 'Online Gomoku duel'
+                    'Gomoku.com': 'Online Gomoku duel',
+                    'YORG.io': 'Build a base, route resources, and survive nightly waves',
+                    '找色差': 'Spot the odd color tile in a grid',
+                    'Draw a Fish': 'Draw a fish and send it into a shared pond',
+                    'Killline': 'Top-down survival shooter',
+                    '掷硬币': 'Flip a virtual coin',
+                    '在线转盘': 'Custom random picker wheel',
+                    '生命游戏': 'Conway\'s Game of Life simulator',
+                    '打砖块': 'Classic brick breaker',
+                    '连点成线': 'Connect dots to reveal a picture'
                 },
                 gameTags: {
                     '休闲': 'Casual',
@@ -971,23 +983,29 @@
                     'Taming': 'サバイバル、ドラゴン育成',
                     '神庙逃亡': 'テンプルラン脱出',
                     '极速矢量': 'ベクタースタイルパルクール',
-                    '黑洞吞噬': 'ブラックホール吸引',
                     '维京战争': 'バイキング戦略戦争',
                     '什么能打败岩石': '楽しいクイズ脳トレ',
                     '半挂车停车': 'セミトレーラー駐車シミュレーション',
                     '画物理线条': '物理お絵かきパズル',
                     'ZombsRoyale': 'バトルロワイヤルシューター',
                     'Zombs.io': 'ゾンビ防衛タワーディフェンス',
-                    '1v1.lol': '建築と射撃の決闘',
                     '2048': '数字マージパズル',
                     'Agar.io': '食べて成長する',
                     'Amogus.io': '宇宙人狼推理ゲーム',
                     'Bonk.io': '物理バトルパーティー',
                     'Copter.io': 'ヘリコプター空中戦',
-                    'CraftMine.io': '採掘とクラフトサバイバル',
                     'Defly.io': 'ヘリ領地争奪戦',
                     'Drift.io': 'ドリフトレースチャレンジ',
-                    'Gomoku.com': 'オンライン五目並べ対戦'
+                    'Gomoku.com': 'オンライン五目並べ対戦',
+                    'YORG.io': '基地建設とタワーディフェンス',
+                    '找色差': '色違いのマスを探す',
+                    'Draw a Fish': '魚を描いて池に泳がせる',
+                    'Killline': '見下ろし視点のサバイバル射撃',
+                    '掷硬币': 'オンラインコイントス',
+                    '在线转盘': 'カスタム抽選ルーレット',
+                    '生命游戏': 'ライフゲームシミュレーター',
+                    '打砖块': 'クラシックブロック崩し',
+                    '连点成线': '点をつないで絵を完成'
                 },
                 gameTags: {
                     '休闲': 'カジュアル',
@@ -1035,86 +1053,92 @@
         }
 
         const GAMES_DATA = [
-            { id:0, name:'坦克大作战', icon:'🎮', category:'io', tags:['休闲','多人'], url:'https://arras.io/', isHot:true, isNew:false },
-            { id:1, name:'自由钢琴', icon:'🎹', category:'casual', tags:['休闲','音乐'], url:'https://www.autopiano.cn/', isHot:false, isNew:true },
-            { id:2, name:'Bloxd.IO', icon:'🧱', category:'casual', tags:['休闲','多人'], url:'https://bloxd.io/', isHot:true, isNew:false },
-            { id:3, name:'风叶穿行', icon:'🍃', category:'action', tags:['跑酷','休闲'], url:'https://www.bilibili.com/blackboard/fe/activity-HQjQSdd3L8.html', isHot:false, isNew:true },
-            { id:4, name:'Battle Dudes', icon:'⚔️', category:'shooting', tags:['射击','多人'], url:'https://battledudes.io/', isHot:false, isNew:false },
-            { id:5, name:'Bellwoods', icon:' ', category:'casual', tags:['休闲','音乐'], url:'https://bellwoods.xyz/', isHot:false, isNew:true },
-            { id:6, name:'赛博徒步', icon:'🥾', category:'survival', tags:['生存','策略'], url:'https://cyberhiking.com/', isHot:false, isNew:true },
-            { id:7, name:'喵喵竞赛', icon:'🐱', category:'casual', tags:['休闲','多人'], url:'https://cat.llx.life/', isHot:true, isNew:false },
-            { id:8, name:'太空飞船着陆', icon:'🚀', category:'casual', tags:['休闲','驾驶'], url:'https://cave.frvr.com/', isHot:false, isNew:false },
-            { id:9, name:'纸牌游戏集合', icon:'🃏', category:'casual', tags:['棋牌','休闲'], url:'https://cardgames.io/', isHot:false, isNew:false },
-            { id:10, name:'电子魔方', icon:'🧊', category:'casual', tags:['益智','休闲'], url:'https://cuber.heheda.top/', isHot:false, isNew:true },
-            { id:11, name:'Deadswitch3', icon:' ', category:'shooting', tags:['射击','快节奏'], url:'https://deadswitch3.com/play/', isHot:false, isNew:false },
-            { id:12, name:'Windows7 模拟', icon:'🖥️', category:'casual', tags:['休闲','模拟'], url:'https://desk.glitchy.website/', isHot:false, isNew:true },
-            { id:13, name:'ACFUN 大逃杀', icon:'🎮', category:'shooting', tags:['吃鸡','多人'], url:'https://dts.momobako.com/index.php', isHot:false, isNew:false },
-            { id:14, name:'Duck Lings', icon:'🦆', category:'casual', tags:['休闲','多人'], url:'https://ducklings.io/', isHot:true, isNew:false },
-            { id:15, name:'Dino Swords', icon:'🦖', category:'casual', tags:['休闲','跑酷'], url:'https://dinoswords.gg/', isHot:false, isNew:true },
-            { id:16, name:'深海大作战', icon:'🐙', category:'io', tags:['休闲','多人'], url:'https://deeeep.io/', isHot:true, isNew:false },
-            { id:17, name:'Diep.io', icon:'🔵', category:'io', tags:['射击','升级'], url:'https://diep.io', isHot:true, isNew:false },
-            { id:18, name:'挖矿大作战', icon:'⛏️', category:'io', tags:['休闲','多人'], url:'https://digdig.io/', isHot:false, isNew:false },
-            { id:19, name:'信任的进化', icon:'🤝', category:'casual', tags:['益智','休闲'], url:'https://dccxi.com/trust/', isHot:false, isNew:true },
-            { id:20, name:'绘迷', icon:'🎨', category:'casual', tags:['社交','绘画'], url:'https://enazo.cn/', isHot:false, isNew:false },
-            { id:21, name:'俄罗斯方块变体', icon:'🧱', category:'casual', tags:['休闲','益智'], url:'https://tetr.io', isHot:false, isNew:false },
-            { id:22, name:'Flappy Bird', icon:' ', category:'casual', tags:['休闲','挑战'], url:'https://flappy-windows.netlify.app/', isHot:false, isNew:true },
-            { id:23, name:'Figure', icon:'🔲', category:'casual', tags:['益智','逻辑'], url:'https://figure.game/zh', isHot:false, isNew:true },
-            { id:24, name:'florr.io', icon:'🌸', category:'io', tags:['动作','多人'], url:'https://florr.io/', isHot:false, isNew:false },
-            { id:25, name:'塔防小游戏', icon:'🏰', category:'strategy', tags:['策略','塔防'], url:'https://www.tafang123.com/', isHot:false, isNew:false },
-            { id:26, name:'水果忍者', icon:'🍉', category:'casual', tags:['休闲','切水果'], url:'https://fn.heheda.cn/', isHot:true, isNew:false },
-            { id:27, name:'Gridspech', icon:' ', category:'casual', tags:['益智','连线'], url:'https://gridspech.baublejar.com/', isHot:false, isNew:true },
-            { id:28, name:'数独', icon:'🧩', category:'casual', tags:['益智','逻辑'], url:'https://guanxl.com/sudoku', isHot:false, isNew:false },
-            { id:29, name:'桌游合集', icon:'🎲', category:'casual', tags:['棋牌','多人'], url:'https://game.hullqin.cn/', isHot:true, isNew:false },
-            { id:30, name:'Gold Digger', icon:'⛏️', category:'casual', tags:['休闲','挖矿'], url:'https://golddigger.frvr.com/', isHot:false, isNew:false },
-            { id:31, name:'将军棋', icon:'👨‍✈️', category:'strategy', tags:['策略','对战'], url:'https://generals.io/', isHot:false, isNew:false },
-            { id:32, name:'你画我猜', icon:'✏️', category:'casual', tags:['社交','绘画'], url:'https://gartic.io/', isHot:true, isNew:false },
-            { id:33, name:'Flower Game', icon:'🌸', category:'casual', tags:['休闲','战斗'], url:'https://shturl.cc/Oztfb7DU0', isHot:false, isNew:true },
-            { id:34, name:'潜伏者', icon:'🕵️', category:'shooting', tags:['射击','建造'], url:'https://lurkers.io/', isHot:false, isNew:false },
-            { id:35, name:'LP文字游戏', icon:'📝', category:'casual', tags:['文字','休闲'], url:'https://www.lpengine.cn/', isHot:false, isNew:true },
-            { id:36, name:'江湖论剑', icon:'⚔️', category:'casual', tags:['武侠','AI'], url:'https://jianghu.gtio.work/', isHot:true, isNew:false },
-            { id:37, name:'Krunker.io', icon:'🎯', category:'shooting', tags:['FPS','多人'], url:'https://krunker.io/', isHot:true, isNew:false },
-            { id:38, name:'Kiomet', icon:'🏰', category:'strategy', tags:['策略','扩张'], url:'https://shturl.cc/vDwzEyRA2', isHot:false, isNew:true },
-            { id:39, name:'滑行者', icon:'⛷️', category:'casual', tags:['休闲','画线'], url:'https://www.linerider.com/', isHot:false, isNew:false },
-            { id:40, name:'导弹游戏', icon:'💥', category:'casual', tags:['休闲','挑战'], url:'https://missile-game.bwhmather.com/', isHot:false, isNew:true },
-            { id:41, name:'扫雷', icon:'💣', category:'casual', tags:['益智','逻辑'], url:'https://www.minesweeper.cn/', isHot:false, isNew:false },
-            { id:42, name:'微软小游戏', icon:'🎮', category:'casual', tags:['休闲','合集'], url:'https://www.msn.cn/zh-cn/play/arcade', isHot:false, isNew:false },
-            { id:43, name:'mk48', icon:'🚢', category:'io', tags:['策略','战舰'], url:'https://mk48.io/', isHot:false, isNew:false },
-            { id:44, name:'Moo Moo', icon:'🐄', category:'survival', tags:['生存','多人'], url:'https://moomoo.io/', isHot:false, isNew:false },
-            { id:45, name:'Narrow One', icon:'🏹', category:'shooting', tags:['射击','多人'], url:'https://narrow.one/', isHot:true, isNew:false },
-            { id:46, name:'永不言弃', icon:' ', category:'casual', tags:['休闲','挑战'], url:'https://ngu.heheda.cn/', isHot:false, isNew:true },
-            { id:47, name:'OGS围棋', icon:'🀄', category:'casual', tags:['棋牌','策略'], url:'https://online-go.com/', isHot:false, isNew:false },
-            { id:48, name:'皇冠数独', icon:'👑', category:'casual', tags:['益智','逻辑'], url:'https://playqueensgame.org/', isHot:false, isNew:true },
-            { id:49, name:'Play CS', icon:' ', category:'shooting', tags:['FPS','多人'], url:'https://play-cs.com/', isHot:true, isNew:false },
-            { id:50, name:'棋牌在线对战', icon:'🃏', category:'casual', tags:['棋牌','多人'], url:'https://www.playok.com/', isHot:false, isNew:false },
-            { id:51, name:'忍者大战', icon:'🥷', category:'action', tags:['动作','冒险'], url:'https://play.js13kgames.com/ninja-vs-evilcorp/', isHot:false, isNew:true },
-            { id:52, name:'植物大战僵尸', icon:'🌱', category:'strategy', tags:['策略','塔防'], url:'https://pvz.heheda.cn/', isHot:true, isNew:false },
-            { id:53, name:'井字棋', icon:'⭕', category:'casual', tags:['益智','对战'], url:'https://playtictactoe.org/', isHot:false, isNew:false },
-            { id:54, name:'红毯竞速', icon:'🏃', category:'racing', tags:['竞速','手速'], url:'https://rcr.heheda.cn/', isHot:false, isNew:true },
-            { id:55, name:'SUROI', icon:'🎯', category:'shooting', tags:['吃鸡','多人'], url:'https://suroi.io/', isHot:true, isNew:false },
-            { id:56, name:'Skribbl.io', icon:'✏️', category:'casual', tags:['社交','绘画'], url:'https://skribbl.io/', isHot:true, isNew:false },
-            { id:57, name:'Slow Roads', icon:'🚗', category:'casual', tags:['休闲','驾驶'], url:'https://slowroads.io/', isHot:false, isNew:false },
-            { id:58, name:'Slither.io', icon:'🐍', category:'io', tags:['休闲','多人'], url:'https://slither.io', isHot:true, isNew:false },
-            { id:59, name:'triep.io', icon:'🎮', category:'io', tags:['射击','3D'], url:'https://triep.io/', isHot:false, isNew:false },
-            { id:60, name:'Taming', icon:'🦴', category:'survival', tags:['生存','RPG'], url:'https://taming.io/', isHot:false, isNew:false },
-            { id:61, name:'神庙逃亡', icon:'🏃', category:'action', tags:['跑酷','冒险'], url:'https://tr.heheda.top/', isHot:true, isNew:false },
-            { id:62, name:'极速矢量', icon:'⚡', category:'action', tags:['跑酷','动作'], url:'https://u.ali213.net/games/jisushiliang/index.html', isHot:false, isNew:true },
-            { id:63, name:'黑洞吞噬', icon:'🕳️', category:'casual', tags:['休闲','吞噬'], url:'https://voodoo.io/', isHot:true, isNew:false },
-            { id:64, name:'维京战争', icon:'⚔️', category:'strategy', tags:['策略','对战'], url:'https://vw.heheda.top/', isHot:false, isNew:true },
-            { id:65, name:'什么能打败岩石', icon:'🪨', category:'casual', tags:['休闲','问答'], url:'https://www.whatbeatsrock.com/', isHot:false, isNew:true },
-            { id:66, name:'半挂车停车', icon:'🚛', category:'casual', tags:['休闲','驾驶'], url:'https://semi-trailer-parking.tankxu.com/', isHot:false, isNew:false },
-            { id:67, name:'画物理线条', icon:'✏️', category:'casual', tags:['益智','物理'], url:'https://www.xiwnn.com/huaxian/', isHot:false, isNew:true },
-            { id:68, name:'ZombsRoyale', icon:'👑', category:'shooting', tags:['吃鸡','多人'], url:'https://zombsroyale.io/', isHot:true, isNew:false },
-            { id:69, name:'Zombs.io', icon:'🏠', category:'strategy', tags:['策略','塔防'], url:'https://zombs.io/', isHot:false, isNew:false },
-            { id:70, name:'1v1.lol', icon:'🏗️', category:'shooting', tags:['射击','建造'], url:'https://1v1.lol/', isHot:true, isNew:false },
-            { id:71, name:'2048', icon:'🔢', category:'casual', tags:['益智','数字'], url:'https://2048game.com/', isHot:false, isNew:false },
-            { id:72, name:'Agar.io', icon:' ', category:'io', tags:['休闲','吞噬'], url:'https://agar.io/', isHot:true, isNew:false },
-            { id:73, name:'Amogus.io', icon:'👾', category:'casual', tags:['推理','多人'], url:'https://amogus.io/', isHot:false, isNew:true },
-            { id:74, name:'Bonk.io', icon:'⚽', category:'io', tags:['休闲','物理'], url:'https://bonk.io/', isHot:false, isNew:false },
-            { id:75, name:'Copter.io', icon:'🚁', category:'io', tags:['射击','飞行'], url:'https://copter.io/', isHot:false, isNew:false },
-            { id:76, name:'CraftMine.io', icon:'⛏️', category:'survival', tags:['生存','建造'], url:'https://craftmine.io/', isHot:false, isNew:false },
-            { id:77, name:'Defly.io', icon:'🚁', category:'io', tags:['射击','升级'], url:'https://defly.io/', isHot:true, isNew:false },
-            { id:78, name:'Drift.io', icon:'🏎️', category:'racing', tags:['竞速','漂移'], url:'https://drift.io/', isHot:false, isNew:false },
-            { id:79, name:'Gomoku.com', icon:'⚫', category:'strategy', tags:['棋牌','策略'], url:'https://gomoku.com/', isHot:false, isNew:true }
+            { id:0, name:'坦克大作战', icon:'🎮', category:'io', tags:['休闲','多人'], url:'https://arras.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image1.png' },
+            { id:1, name:'自由钢琴', icon:'🎹', category:'casual', tags:['休闲','音乐'], url:'https://www.autopiano.cn/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image2.png' },
+            { id:2, name:'Bloxd.IO', icon:'🧱', category:'casual', tags:['休闲','多人'], url:'https://bloxd.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image3.png' },
+            { id:3, name:'风叶穿行', icon:'🍃', category:'action', tags:['跑酷','休闲'], url:'https://www.bilibili.com/blackboard/fe/activity-HQjQSdd3L8.html', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image4.png' },
+            { id:4, name:'Battle Dudes', icon:'⚔️', category:'shooting', tags:['射击','多人'], url:'https://battledudes.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image5.png' },
+            { id:5, name:'Bellwoods', icon:' ', category:'casual', tags:['休闲','音乐'], url:'https://bellwoods.xyz/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image6.png' },
+            { id:6, name:'赛博徒步', icon:'🥾', category:'survival', tags:['生存','策略'], url:'https://cyberhiking.com/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image7.png' },
+            { id:7, name:'喵喵竞赛', icon:'🐱', category:'casual', tags:['休闲','多人'], url:'https://cat.llx.life/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image8.png' },
+            { id:8, name:'太空飞船着陆', icon:'🚀', category:'casual', tags:['休闲','驾驶'], url:'https://cave.frvr.com/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image9.png' },
+            { id:9, name:'纸牌游戏集合', icon:'🃏', category:'casual', tags:['棋牌','休闲'], url:'https://cardgames.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image10.png' },
+            { id:10, name:'电子魔方', icon:'🧊', category:'casual', tags:['益智','休闲'], url:'https://cuber.heheda.top/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image11.png' },
+            { id:11, name:'Deadswitch3', icon:' ', category:'shooting', tags:['射击','快节奏'], url:'https://deadswitch3.com/play/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image12.png' },
+            { id:12, name:'Windows7 模拟', icon:'🖥️', category:'casual', tags:['休闲','模拟'], url:'https://desk.glitchy.website/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image13.png' },
+            { id:13, name:'ACFUN 大逃杀', icon:'🎮', category:'shooting', tags:['吃鸡','多人'], url:'https://dts.momobako.com/index.php', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image14.png' },
+            { id:14, name:'Duck Lings', icon:'🦆', category:'casual', tags:['休闲','多人'], url:'https://ducklings.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image15.png' },
+            { id:15, name:'Dino Swords', icon:'🦖', category:'casual', tags:['休闲','跑酷'], url:'https://dinoswords.gg/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image16.png' },
+            { id:16, name:'深海大作战', icon:'🐙', category:'io', tags:['休闲','多人'], url:'https://deeeep.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image17.png' },
+            { id:17, name:'Diep.io', icon:'🔵', category:'io', tags:['射击','升级'], url:'https://diep.io', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image18.png' },
+            { id:18, name:'挖矿大作战', icon:'⛏️', category:'io', tags:['休闲','多人'], url:'https://digdig.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image19.png' },
+            { id:19, name:'信任的进化', icon:'🤝', category:'casual', tags:['益智','休闲'], url:'https://dccxi.com/trust/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image20.png' },
+            { id:20, name:'绘迷', icon:'🎨', category:'casual', tags:['社交','绘画'], url:'https://enazo.cn/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image21.png' },
+            { id:21, name:'俄罗斯方块变体', icon:'🧱', category:'casual', tags:['休闲','益智'], url:'https://tetr.io', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image22.png' },
+            { id:22, name:'Flappy Bird', icon:' ', category:'casual', tags:['休闲','挑战'], url:'https://flappy-windows.netlify.app/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image23.png' },
+            { id:23, name:'Figure', icon:'🔲', category:'casual', tags:['益智','逻辑'], url:'https://figure.game/zh', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image24.png' },
+            { id:24, name:'florr.io', icon:'🌸', category:'io', tags:['动作','多人'], url:'https://florr.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image25.png' },
+            { id:25, name:'塔防小游戏', icon:'🏰', category:'strategy', tags:['策略','塔防'], url:'https://www.tafang123.com/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image26.png' },
+            { id:26, name:'水果忍者', icon:'🍉', category:'casual', tags:['休闲','切水果'], url:'https://fn.heheda.cn/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image27.png' },
+            { id:27, name:'Gridspech', icon:' ', category:'casual', tags:['益智','连线'], url:'https://gridspech.baublejar.com/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image28.png' },
+            { id:28, name:'数独', icon:'🧩', category:'casual', tags:['益智','逻辑'], url:'https://guanxl.com/sudoku', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image29.png' },
+            { id:29, name:'桌游合集', icon:'🎲', category:'casual', tags:['棋牌','多人'], url:'https://game.hullqin.cn/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image30.png' },
+            { id:30, name:'Gold Digger', icon:'⛏️', category:'casual', tags:['休闲','挖矿'], url:'https://golddigger.frvr.com/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image31.png' },
+            { id:31, name:'将军棋', icon:'👨‍✈️', category:'strategy', tags:['策略','对战'], url:'https://generals.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image32.png' },
+            { id:32, name:'你画我猜', icon:'✏️', category:'casual', tags:['社交','绘画'], url:'https://gartic.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image33.png' },
+            { id:33, name:'Flower Game', icon:'🌸', category:'casual', tags:['休闲','战斗'], url:'https://shturl.cc/Oztfb7DU0', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image34.png' },
+            { id:34, name:'潜伏者', icon:'🕵️', category:'shooting', tags:['射击','建造'], url:'https://lurkers.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image35.png' },
+            { id:35, name:'LP文字游戏', icon:'📝', category:'casual', tags:['文字','休闲'], url:'https://www.lpengine.cn/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image36.png' },
+            { id:36, name:'江湖论剑', icon:'⚔️', category:'casual', tags:['武侠','AI'], url:'https://jianghu.gtio.work/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image37.png' },
+            { id:37, name:'Krunker.io', icon:'🎯', category:'shooting', tags:['FPS','多人'], url:'https://krunker.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image38.png' },
+            { id:38, name:'Kiomet', icon:'🏰', category:'strategy', tags:['策略','扩张'], url:'https://shturl.cc/vDwzEyRA2', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image39.png' },
+            { id:39, name:'滑行者', icon:'⛷️', category:'casual', tags:['休闲','画线'], url:'https://www.linerider.com/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image40.png' },
+            { id:40, name:'导弹游戏', icon:'💥', category:'casual', tags:['休闲','挑战'], url:'https://missile-game.bwhmather.com/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image41.png' },
+            { id:41, name:'扫雷', icon:'💣', category:'casual', tags:['益智','逻辑'], url:'https://www.minesweeper.cn/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image42.png' },
+            { id:42, name:'微软小游戏', icon:'🎮', category:'casual', tags:['休闲','合集'], url:'https://www.msn.cn/zh-cn/play/arcade', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image43.png' },
+            { id:43, name:'mk48', icon:'🚢', category:'io', tags:['策略','战舰'], url:'https://mk48.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image44.png' },
+            { id:44, name:'Moo Moo', icon:'🐄', category:'survival', tags:['生存','多人'], url:'https://moomoo.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image45.png' },
+            { id:45, name:'Narrow One', icon:'🏹', category:'shooting', tags:['射击','多人'], url:'https://narrow.one/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image46.png' },
+            { id:46, name:'永不言弃', icon:' ', category:'casual', tags:['休闲','挑战'], url:'https://ngu.heheda.cn/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image47.png' },
+            { id:47, name:'OGS围棋', icon:'🀄', category:'casual', tags:['棋牌','策略'], url:'https://online-go.com/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image48.png' },
+            { id:48, name:'皇冠数独', icon:'👑', category:'casual', tags:['益智','逻辑'], url:'https://playqueensgame.org/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image49.png' },
+            { id:49, name:'Play CS', icon:' ', category:'shooting', tags:['FPS','多人'], url:'https://play-cs.com/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image50.png' },
+            { id:50, name:'棋牌在线对战', icon:'🃏', category:'casual', tags:['棋牌','多人'], url:'https://www.playok.com/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image51.png' },
+            { id:51, name:'忍者大战', icon:'🥷', category:'action', tags:['动作','冒险'], url:'https://play.js13kgames.com/ninja-vs-evilcorp/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image52.png' },
+            { id:52, name:'植物大战僵尸', icon:'🌱', category:'strategy', tags:['策略','塔防'], url:'https://pvz.heheda.cn/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image53.png' },
+            { id:53, name:'井字棋', icon:'⭕', category:'casual', tags:['益智','对战'], url:'https://playtictactoe.org/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image54.png' },
+            { id:54, name:'红毯竞速', icon:'🏃', category:'racing', tags:['竞速','手速'], url:'https://rcr.heheda.cn/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image55.png' },
+            { id:55, name:'SUROI', icon:'🎯', category:'shooting', tags:['吃鸡','多人'], url:'https://suroi.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image56.png' },
+            { id:56, name:'Skribbl.io', icon:'✏️', category:'casual', tags:['社交','绘画'], url:'https://skribbl.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image57.png' },
+            { id:57, name:'Slow Roads', icon:'🚗', category:'casual', tags:['休闲','驾驶'], url:'https://slowroads.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image58.png' },
+            { id:58, name:'Slither.io', icon:'🐍', category:'io', tags:['休闲','多人'], url:'https://slither.io', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image59.png' },
+            { id:59, name:'triep.io', icon:'🎮', category:'io', tags:['射击','3D'], url:'https://triep.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image60.png' },
+            { id:60, name:'Taming', icon:'🦴', category:'survival', tags:['生存','RPG'], url:'https://taming.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image61.png' },
+            { id:61, name:'神庙逃亡', icon:'🏃', category:'action', tags:['跑酷','冒险'], url:'https://tr.heheda.top/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image62.png' },
+            { id:62, name:'极速矢量', icon:'⚡', category:'action', tags:['跑酷','动作'], url:'https://u.ali213.net/games/jisushiliang/index.html', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image63.png' },
+            { id:64, name:'维京战争', icon:'⚔️', category:'strategy', tags:['策略','对战'], url:'https://vw.heheda.top/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image64.png' },
+            { id:65, name:'什么能打败岩石', icon:'🪨', category:'casual', tags:['休闲','问答'], url:'https://www.whatbeatsrock.com/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image65.png' },
+            { id:66, name:'半挂车停车', icon:'🚛', category:'casual', tags:['休闲','驾驶'], url:'https://semi-trailer-parking.tankxu.com/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image66.png' },
+            { id:67, name:'画物理线条', icon:'✏️', category:'casual', tags:['益智','物理'], url:'https://www.xiwnn.com/huaxian/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image67.png' },
+            { id:68, name:'ZombsRoyale', icon:'👑', category:'shooting', tags:['吃鸡','多人'], url:'https://zombsroyale.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image68.png' },
+            { id:69, name:'Zombs.io', icon:'🏠', category:'strategy', tags:['策略','塔防'], url:'https://zombs.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image69.png' },
+            { id:71, name:'2048', icon:'🔢', category:'casual', tags:['益智','数字'], url:'https://2048game.com/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image70.png' },
+            { id:72, name:'Agar.io', icon:' ', category:'io', tags:['休闲','吞噬'], url:'https://agar.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image71.png' },
+            { id:73, name:'Amogus.io', icon:'👾', category:'casual', tags:['推理','多人'], url:'https://amogus.io/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image72.png' },
+            { id:74, name:'Bonk.io', icon:'⚽', category:'io', tags:['休闲','物理'], url:'https://bonk.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image73.png' },
+            { id:75, name:'Copter.io', icon:'🚁', category:'io', tags:['射击','飞行'], url:'https://copter.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image74.png' },
+            { id:77, name:'Defly.io', icon:'🚁', category:'io', tags:['射击','升级'], url:'https://defly.io/', isHot:true, isNew:false, cover:'http://82.25.47.4:18080/image75.png' },
+            { id:78, name:'Drift.io', icon:'🏎️', category:'racing', tags:['竞速','漂移'], url:'https://drift.io/', isHot:false, isNew:false, cover:'http://82.25.47.4:18080/image76.png' },
+            { id:79, name:'Gomoku.com', icon:'⚫', category:'strategy', tags:['棋牌','策略'], url:'https://gomoku.com/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image77.png' },
+            { id:80, name:'YORG.io', icon:'🏭', category:'strategy', tags:['策略','塔防'], url:'https://yorg.io/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image78.png' },
+            { id:81, name:'找色差', icon:'🎨', category:'casual', tags:['休闲','眼力'], url:'https://www.zhaosecha.com/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image79.png' },
+            { id:82, name:'Draw a Fish', icon:'🐟', category:'casual', tags:['绘画','创意'], url:'https://drawafish.live/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image80.png' },
+            { id:83, name:'Killline', icon:'🎯', category:'shooting', tags:['射击','生存'], url:'https://us-killline.com/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image82.png' },
+            { id:84, name:'掷硬币', icon:'🪙', category:'casual', tags:['休闲','工具'], url:'https://wheelpage.com/zh/coin-flip/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image83.png' },
+            { id:85, name:'在线转盘', icon:'🎡', category:'casual', tags:['休闲','工具'], url:'https://wheelpage.com/zh/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image84.png' },
+            { id:86, name:'生命游戏', icon:'🧬', category:'strategy', tags:['模拟','益智'], url:'https://life.lkba.cn/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image85.png' },
+            { id:87, name:'打砖块', icon:'🧱', category:'casual', tags:['休闲','反应'], url:'http://game3.baifumeiba.com/dbj/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image86.png' },
+            { id:88, name:'连点成线', icon:'🔗', category:'casual', tags:['益智','连线'], url:'https://play-dot-to.com/', isHot:false, isNew:true, cover:'http://82.25.47.4:18080/image87.png' }
         ];
 
         const GAME_INTROS = {
@@ -2255,12 +2279,6 @@
                         "核心玩法：融合割草清场、模拟经营资源积累、角色扮演养成和战争策略战术博弈。玩家通过建造农场等设施积累资源，升级军队和防御设施。战斗中巧妙布置兵力抵御敌军，通过战斗积累经验升级士兵，收集装备强化部队。",
                         "游戏模式：包含PvE（对战电脑AI）和PvP（实时对抗）模式。支持双人对战和锦标赛模式。采用卡通手绘风格画面。"
             ],
-            "黑洞吞噬": [
-                        "黑洞吞噬是一款由法国Voodoo公司开发的多人在线休闲竞技游戏。玩家控制一个黑洞，在城市中吞噬各种物体来扩大体积，最终目标是成为最大的黑洞。支持实时多人对战，玩家之间可互相吞噬。",
-                        "玩法机制",
-                        "核心玩法：开始控制微小黑洞，移动吞噬街道上各种物体（路灯、垃圾桶、邮箱等），体积增大后可吞噬更大建筑物，最终可吞噬其他玩家控制的较小黑洞。时间结束前成为体积最大的黑洞即为胜利。",
-                        "游戏模式：多人竞技模式（多名玩家同地图比赛吞噬）和无尽模式（不断吞噬从天而降的物品）。包含6张不同风格的地图。"
-            ],
             "极速矢量": [
                         "极速矢量是一款设计简洁的矢量风格跑酷竞速游戏。玩家控制矢量小车在轨道上不断前进，躲避路障，获得更高分数。操作简单，只需点击屏幕即可跳跃，支持二段跳机制。",
                         "玩法机制",
@@ -2572,6 +2590,60 @@
                         "核心规则：双方轮流在棋盘交叉点落子，率先让五枚同色棋子在横向、纵向或斜向连成一线的一方获胜。",
                         "对局体验：五子棋规则简单，但攻防节奏很紧。每一步都可能同时制造进攻机会和防守压力，适合短时间反复开局。",
                         "策略技巧：开局优先争夺棋盘中心区域，注意封堵对手的活三和活四。进攻时尽量制造双威胁，让对手无法一次防住所有连线。"
+            ],
+            "YORG.io": [
+                        'YORG.io 是一款浏览器里的基地建设与塔防策略游戏。玩家需要在有限空间内采集资源、铺设生产链，并用防御塔保护核心基地。',
+                        '玩法机制',
+                        '核心目标：白天规划建筑、连接矿点和工厂，夜晚抵御敌人进攻。资源运输效率、防御塔位置和升级顺序会直接影响基地能撑多久。',
+                        '策略技巧：先保证基础资源稳定供应，再扩大防线。不要把建筑铺得太散，紧凑路线更容易防守，也能减少资源运输损耗。'
+            ],
+            "找色差": [
+                        '找色差是一款轻量网页眼力挑战游戏。每一关都会出现一组颜色相近的方块，玩家需要在倒计时内找出唯一不同的那一块。',
+                        '玩法机制',
+                        '核心目标：观察色块矩阵，点击颜色略有差异的方块。关卡推进后色差会变小、矩阵更密集，节奏也会更紧。',
+                        '策略技巧：不要只盯中心区域，先快速扫边角，再用余光比较整片色块的明暗变化，通常能更快定位异常格。'
+            ],
+            "Draw a Fish": [
+                        'Draw a Fish 是一款创意绘画网页小游戏。玩家在画布上画出面朝右侧的鱼，提交后可以看到自己的作品进入在线鱼池。',
+                        '玩法机制',
+                        '核心目标：用简单线条画出鱼的轮廓、眼睛和装饰，再提交生成可游动的小鱼。乐趣来自玩家作品之间的差异和意外效果。',
+                        '创作技巧：轮廓保持清晰，鱼头朝右，身体不要画得过碎。颜色对比越明显，进入鱼池后的识别度越高。'
+            ],
+            "Killline": [
+                        'Killline 是一款俯视角在线射击生存游戏。玩家进入战场后需要搜集武器和补给，在不断变化的战局中与其他玩家周旋。',
+                        '玩法机制',
+                        '核心目标：寻找装备、控制安全路线并击败遭遇的对手。地图视野、掩体利用和换弹时机比单纯硬拼更重要。',
+                        '策略技巧：落地先保证基础武器和恢复道具，移动时多借助建筑与地形遮挡。听到交火时不要急着冲入中心，侧翼切入往往更稳。'
+            ],
+            "掷硬币": [
+                        '掷硬币是一个简单直接的在线随机工具，适合在需要二选一时快速给出正面或反面的结果。',
+                        '玩法机制',
+                        '核心目标：点击开始后等待硬币翻转，页面会给出正面或反面的随机结果。它更像轻量决策小游戏，适合聚会、抽签或临时选择。',
+                        '使用建议：把两个选项提前对应到正反面，结果出来后立即执行，避免反复重投让随机选择失去意义。'
+            ],
+            "在线转盘": [
+                        '在线转盘是一款可自定义选项的随机选择工具。玩家可以输入多个候选项，让转盘旋转后决定最终结果。',
+                        '玩法机制',
+                        '核心目标：把名字、任务或选项填入转盘，点击旋转后等待指针停下。它适合抽奖、分组、聚会小游戏和选择困难场景。',
+                        '使用建议：选项数量较多时先合并相似项，保持每个选项文字简短，转盘结果会更清楚。'
+            ],
+            "生命游戏": [
+                        '生命游戏是康威生命游戏的网页模拟器。玩家通过设置初始细胞布局，观察简单规则如何演化出复杂图案。',
+                        '玩法机制',
+                        '核心规则：每个格子的生死由周围八个邻居决定。细胞会因为邻居过少而死亡，也会因为邻居数量合适而延续或诞生。',
+                        '探索技巧：从小型图案开始尝试，观察稳定结构、振荡结构和会移动的图案。暂停后微调几个格子，常能得到完全不同的演化结果。'
+            ],
+            "打砖块": [
+                        '打砖块是一款经典街机玩法的网页小游戏。玩家控制底部挡板接住小球，通过反弹角度逐步击碎上方砖块。',
+                        '玩法机制',
+                        '核心目标：让小球持续反弹并命中砖块，尽量不要让球落到底部。不同位置接球会影响反弹角度，也决定清场效率。',
+                        '策略技巧：优先打开侧边通道，让小球进入砖块背后连续反弹。挡板移动不要过猛，先判断落点再微调位置。'
+            ],
+            "连点成线": [
+                        '连点成线是一款轻松的点线绘图益智游戏。玩家按照顺序连接画面上的圆点，最终揭示完整图案。',
+                        '玩法机制',
+                        '核心目标：从起点开始依次连接圆点，避免漏点或连错顺序。每一幅图案都像一张逐步完成的简笔画。',
+                        '游玩建议：先观察点的整体走向，再开始连接。遇到密集区域时放慢节奏，确认数字顺序后再拖动。'
             ]
         };
 
@@ -3267,11 +3339,15 @@
         }
 
         function getGameImageUrl(game, size='400x240') {
-            return buildGameCoverDataUrl(game, size);
+            return game.cover || buildGameCoverDataUrl(game, size);
         }
 
         function getFallbackImageUrl(game, size='400x240') {
             return buildGameCoverDataUrl(game, size);
+        }
+
+        function escapeAttr(value) {
+            return escapeHTML(value).replace(/`/g, '&#96;');
         }
 
         function renderCreativeMarket() {
@@ -3822,12 +3898,11 @@
                 if(grid.querySelector(`[data-game-id="${game.id}"]`)) return;
 
                 let pop = getGamePlayCount(game.id);
-                let imageUrl = getGameImageUrl(game);
-                let fallbackUrl = getFallbackImageUrl(game);
+                let imageUrl = game.cover || getGameImageUrl(game);
                 let card = document.createElement('div'); card.className = 'game-card';
                 card.setAttribute('data-game-id', game.id);
                 card.innerHTML = `
-                    <div class="game-thumb" style="background-image:url('${imageUrl}'), url('${fallbackUrl}');">
+                    <div class="game-thumb" style="background-image:url('${escapeAttr(imageUrl)}');">
                         <div class="popularity-badge">🔥 ${pop.toLocaleString()} ${LANG[currentLang].popularityPlayed}</div>
                         <div class="popularity-num-detailed">${pop} ${LANG[currentLang].popularityTimes}</div>
                         <div class="card-overlay">

@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="https://i.see.you/2026/06/22/3yhV/e19ad884431c91485ce394d53e4a095b.png">
     <link rel="shortcut icon" type="image/png" href="https://i.see.you/2026/06/24/b1nQ/141feff53db3d6edc9dd06d643be3c44.png">
     
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260625-cardshots">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -35,7 +35,9 @@
             <button class="game-sea-nav" id="gameSeaNavBtn" onclick="showGameSea()">🌊 <span>游戏公海</span></button>
         </div>
         <div class="nav-right">
+            <!--登录注册入口已隐藏
             <button class="auth-btn" id="authNavBtn" onclick="openAuthModal()" aria-label="登录" title="登录"><i class="fas fa-user"></i><span id="authNavText">登录</span></button>
+            -->
             <button class="blind-box-nav" id="dailyBlindBoxBtn" onclick="openDailyBlindBox()">🎁 <span>每日盲盒</span></button>
             <div class="lang-switcher" id="langSwitcher">
                 <button class="lang-btn" onclick="toggleLangDropdown()"><span>🌐</span><span id="currentLang">中文</span><span>▼</span></button>
@@ -230,9 +232,11 @@
                 </span>
             </button>
         </div>
+        <!--登录解锁福福已隐藏
         <button class="fufu-login-prompt" id="fufuLoginPrompt" type="button" onclick="openAuthModal()">
             🔒 登录解锁福福
         </button>
+        -->
         <button class="fufu-toggle" id="fufuToggleBtn" type="button" onclick="toggleFufuPet()" aria-label="隐藏福福" title="隐藏福福">
             <span class="fufu-toggle-icon" aria-hidden="true">×</span>
         </button>
@@ -339,6 +343,6 @@
     </div>
 
     
-    <script type="module" src="script.js"></script>
+    <script type="module" src="script.js?v=20260625-cardshots"></script>
 </body>
 </html>
