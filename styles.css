@@ -146,24 +146,13 @@
         .dice-symbol {
             position:relative; width:30px; height:30px; display:block; border-radius:8px;
             background:linear-gradient(145deg, #ffffff 0%, #eff6ff 52%, #bae6fd 100%);
-            box-shadow:inset 0 2px 5px rgba(255,255,255,0.85), inset -4px -5px 10px rgba(14,116,144,0.24), 0 8px 16px rgba(0,0,0,0.32);
+            box-shadow:inset 0 2px 5px rgba(255,255,255,0.85), 0 8px 16px rgba(0,0,0,0.32);
             transform:rotate(-8deg); z-index:1;
-            animation:diceFloat3d 3.1s ease-in-out infinite;
+            animation:diceFloat2d 3.1s ease-in-out infinite;
         }
         .dice-symbol::before,
         .dice-symbol::after {
-            content:''; position:absolute; pointer-events:none;
-        }
-        .dice-symbol::before {
-            left:5px; right:-6px; bottom:-6px; height:8px;
-            background:linear-gradient(135deg, #7dd3fc, #2563eb);
-            border-radius:0 0 8px 8px; transform:skewX(-40deg); z-index:-1;
-            box-shadow:0 5px 10px rgba(0,0,0,0.28);
-        }
-        .dice-symbol::after {
-            top:5px; bottom:-6px; right:-6px; width:8px;
-            background:linear-gradient(160deg, #60a5fa, #1d4ed8);
-            border-radius:0 8px 8px 0; transform:skewY(-40deg); z-index:-1;
+            display:none;
         }
         .dice-symbol i {
             position:absolute; width:5.2px; height:5.2px; border-radius:50%; background:#0f172a;
@@ -179,9 +168,9 @@
         .dice-tab { justify-content:center; padding-top:0; min-width:58px; }
         .dice-tab .dice-symbol { width:36px; height:36px; }
         .dice-tab .dice-symbol i { width:5.5px; height:5.5px; }
-        @keyframes diceFloat3d {
-            0%,100% { transform:translateY(0) rotate(-9deg); }
-            50% { transform:translateY(-3px) rotate(7deg); }
+        @keyframes diceFloat2d {
+            0%,100% { transform: translateY(0) rotate(-9deg); }
+            50% { transform: translateY(-3px) rotate(7deg); }
         }
 
         .lang-switcher { position: relative; }
@@ -278,7 +267,7 @@
 
         .game-card { background:var(--bg-card); border-radius:16px; overflow:hidden; cursor:pointer; transition: all var(--transition-fast); position:relative; }
         .game-card:hover { transform:translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-        .game-thumb { height:160px; position:relative; overflow:hidden; background-color:#111827; background-size:cover; background-position:center; }
+        .game-thumb { height:160px; position:relative; overflow:hidden; background-color:#111827; background-size:cover; background-position:center; background-repeat:no-repeat; }
 
         .popularity-badge {
             position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.7); color: #fff;
@@ -854,9 +843,9 @@
         }
         .dice-one { transform:translateZ(60px); --dice-pips:none; }
         .dice-two { transform:rotateY(180deg) translateZ(60px); --dice-center:transparent; --dice-pips:-30px -30px 0 #101827, 30px 30px 0 #101827; }
-        .dice-three { transform:rotateY(90deg) translateZ(60px); --dice-pips:-30px -30px 0 #101827, 30px 30px 0 #101827; }
+        .dice-three { transform:rotateY(90deg) translateZ(60px); --dice-center:transparent; --dice-pips:-30px -30px 0 #101827, 0 0 0 #101827, 30px 30px 0 #101827; }
         .dice-four { transform:rotateY(-90deg) translateZ(60px); --dice-center:transparent; --dice-pips:-30px -30px 0 #101827, 30px -30px 0 #101827, -30px 30px 0 #101827, 30px 30px 0 #101827; }
-        .dice-five { transform:rotateX(90deg) translateZ(60px); --dice-pips:-30px -30px 0 #101827, 30px -30px 0 #101827, -30px 30px 0 #101827, 30px 30px 0 #101827; }
+        .dice-five { transform:rotateX(90deg) translateZ(60px); --dice-center:transparent; --dice-pips:-30px -30px 0 #101827, 30px -30px 0 #101827, 0 0 0 #101827, -30px 30px 0 #101827, 30px 30px 0 #101827; }
         .dice-six { transform:rotateX(-90deg) translateZ(60px); --dice-center:transparent; --dice-pips:-30px -34px 0 #101827, 30px -34px 0 #101827, -30px 0 0 #101827, 30px 0 0 #101827, -30px 34px 0 #101827, 30px 34px 0 #101827; }
 
         .daily-blind-modal {
