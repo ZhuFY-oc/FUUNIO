@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" href="https://i.see.you/2026/06/22/3yhV/e19ad884431c91485ce394d53e4a095b.png">
     <link rel="shortcut icon" type="image/png" href="https://i.see.you/2026/06/24/b1nQ/141feff53db3d6edc9dd06d643be3c44.png">
     
-    <link rel="stylesheet" href="styles.css?v=20260625-cardshots">
+    <link rel="stylesheet" href="styles.css?v=20261017-fufu-game-controls">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -235,13 +235,17 @@ var _hmt = _hmt || [];
         </div>
     </div>
 
-    <div class="fufu-widget is-locked" id="fufuWidget" aria-live="polite">
+    <div class="fufu-widget is-unlocked is-visible" id="fufuWidget" aria-live="polite">
         <div class="fufu-stage" id="fufuStage">
             <div class="fufu-bubble" id="fufuBubble"></div>
             <button class="fufu-character" id="fufuCharacter" type="button" onclick="handleFufuClick()" aria-label="摸摸福福">
                 <span class="fufu-jump">
                     <span class="fufu-breathe">
-                        <img class="fufu-image" src="https://i.see.you/2026/06/24/2doY/e08cf9cd807deda5ab0c859d501e5b4b.png" alt="福福">
+                                <span class="fufu-art" id="fufuArt" data-mode="idle" role="img" aria-label="福福">
+                                    <img class="fufu-media fufu-idle" src="assets/fufu/idle.webp" alt="">
+                                    <img class="fufu-media fufu-waving" src="assets/fufu/waving.webp" alt="">
+                                    <span class="fufu-media fufu-sprite" id="fufuSprite" aria-hidden="true"></span>
+                        </span>
                     </span>
                 </span>
             </button>
@@ -357,6 +361,6 @@ var _hmt = _hmt || [];
     </div>
 
     
-    <script type="module" src="script.js?v=20260625-cardshots"></script>
+    <script type="module" src="script.js?v=20261017-fufu-game-controls"></script>
 </body>
 </html>

@@ -2734,7 +2734,7 @@
             updatePopularityDisplay(gameId);
         }
 
-        function updatePopularityDisplay(gameId) {
+        function updatePopularityDisplay(gameId, refreshBanner=true) {
             const pop = getGamePlayCount(gameId);
             const t = LANG[currentLang];
             document.querySelectorAll(`[data-game-id="${gameId}"] .popularity-badge`).forEach(el => {
@@ -2743,7 +2743,7 @@
             document.querySelectorAll(`[data-game-id="${gameId}"] .popularity-num-detailed`).forEach(el => {
                 el.textContent = `${pop} ${t.popularityTimes}`;
             });
-            if(document.getElementById('bannerWrapper')) buildBannerSlides();
+            if(refreshBanner && document.getElementById('bannerWrapper')) buildBannerSlides();
         }
 
         function getAuthCopy() {
@@ -3019,12 +3019,225 @@
         }
 
         const FUFU_MESSAGES = ['摸摸福福，这把必赢！', '加油鸭！', '你真好～', '福气满满！', '今天运气爆棚！'];
+        const FUFU_SPRITE = {
+            frameWidth:192,
+            frameHeight:208,
+            directionRows:[9, 10],
+            directionCount:16,
+            idleDelay:2000
+        };
+        const FUFU_ACTIONS = {
+            'running-right': { row:1, frames:8, frameDelay:90 },
+            'running-left': { row:2, frames:8, frameDelay:90 },
+            waving: { row:3, frames:4, duration:900, frameDelay:150 },
+            failed: { row:5, frames:8, duration:1200, frameDelay:150 },
+            waiting: { row:6, frames:6, duration:1000, frameDelay:160 },
+            running: { row:7, frames:6, duration:1000, frameDelay:160 },
+            review: { row:8, frames:8, duration:1300, frameDelay:160 }
+        };
+        const FUFU_CLICK_ACTIONS = ['waving', 'failed', 'review', 'waiting', 'running'];
         const fufuPet = {
             visible:localStorage.getItem('fufuPetVisible') !== 'false',
             wasHidden:false,
             bubbleTimer:null,
-            jumpTimer:null
+            jumpTimer:null,
+            actionTimer:null,
+            actionFrameTimer:null,
+            mouseIdleTimer:null,
+            lastMouseMoveAt:0,
+            lastDirection:-1,
+            actionName:null,
+            actionFrame:0,
+            isMoving:false,
+            moveDirection:0,
+            moveTimer:null,
+            positionX:null,
+            pressedKeys:new Set(),
+            interactionsReady:false
         };
+
+        function setFufuMode(mode) {
+            const art = document.getElementById('fufuArt');
+            if(!art || !fufuPet.visible) return;
+            art.dataset.mode = mode;
+        }
+
+        function setFufuSpritePosition(row, col, animate=true) {
+            const sprite = document.getElementById('fufuSprite');
+            if(!sprite) return;
+            const nextX = `-${col * FUFU_SPRITE.frameWidth}px`;
+            const nextY = `-${row * FUFU_SPRITE.frameHeight}px`;
+            const currentX = sprite.style.getPropertyValue('--sprite-x') || nextX;
+            const currentY = sprite.style.getPropertyValue('--sprite-y') || nextY;
+            sprite.style.setProperty('--sprite-from-x', currentX);
+            sprite.style.setProperty('--sprite-from-y', currentY);
+            sprite.style.setProperty('--sprite-x', nextX);
+            sprite.style.setProperty('--sprite-y', nextY);
+            sprite.classList.remove('is-switching');
+            if(animate) {
+                void sprite.offsetWidth;
+                sprite.classList.add('is-switching');
+            }
+        }
+
+        function setFufuDirectionFrame(direction) {
+            const normalized = ((direction % FUFU_SPRITE.directionCount) + FUFU_SPRITE.directionCount) % FUFU_SPRITE.directionCount;
+            const row = FUFU_SPRITE.directionRows[Math.floor(normalized / 8)];
+            setFufuSpritePosition(row, normalized % 8);
+            fufuPet.lastDirection = normalized;
+        }
+
+        function clearFufuActionTimers() {
+            clearTimeout(fufuPet.actionTimer);
+            clearInterval(fufuPet.actionFrameTimer);
+            fufuPet.actionTimer = null;
+            fufuPet.actionFrameTimer = null;
+            fufuPet.actionName = null;
+        }
+
+        function restoreFufuAfterAction() {
+            clearFufuActionTimers();
+            if(!fufuPet.visible) return;
+            if(fufuPet.isMoving) {
+                startFufuRunning(fufuPet.moveDirection);
+                return;
+            }
+            if(Date.now() - fufuPet.lastMouseMoveAt < FUFU_SPRITE.idleDelay) {
+                setFufuDirectionFrame(fufuPet.lastDirection >= 0 ? fufuPet.lastDirection : 0);
+                setFufuMode('sprite');
+                scheduleFufuIdle();
+            } else {
+                setFufuMode('idle');
+            }
+        }
+
+        function playFufuAction(name) {
+            const action = FUFU_ACTIONS[name];
+            if(!action || !fufuPet.visible) return;
+            clearFufuActionTimers();
+            fufuPet.actionName = name;
+            fufuPet.actionFrame = 0;
+            // All click and running actions are rows in the same sprite sheet.
+            setFufuMode('sprite');
+            setFufuSpritePosition(action.row, 0, false);
+            fufuPet.actionFrameTimer = setInterval(() => {
+                if(!fufuPet.actionName) return;
+                fufuPet.actionFrame = (fufuPet.actionFrame + 1) % action.frames;
+                setFufuSpritePosition(action.row, fufuPet.actionFrame);
+            }, action.frameDelay);
+            fufuPet.actionTimer = setTimeout(restoreFufuAfterAction, action.duration);
+        }
+
+        function getFufuDirectionFromPointer(event) {
+            const stage = document.getElementById('fufuStage');
+            if(!stage) return 0;
+            const rect = stage.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const angle = (Math.atan2(event.clientY - centerY, event.clientX - centerX) + Math.PI * 2) % (Math.PI * 2);
+            return Math.round(angle / (Math.PI * 2 / FUFU_SPRITE.directionCount)) % FUFU_SPRITE.directionCount;
+        }
+
+        function scheduleFufuIdle() {
+            clearTimeout(fufuPet.mouseIdleTimer);
+            fufuPet.mouseIdleTimer = setTimeout(() => {
+                const elapsed = Date.now() - fufuPet.lastMouseMoveAt;
+                if(elapsed >= FUFU_SPRITE.idleDelay) {
+                    setFufuMode('idle');
+                    return;
+                }
+                scheduleFufuIdle();
+            }, FUFU_SPRITE.idleDelay);
+        }
+
+        function handleFufuMouseMove(event) {
+            if(!fufuPet.visible || fufuPet.isMoving) return;
+            fufuPet.lastMouseMoveAt = Date.now();
+            const direction = getFufuDirectionFromPointer(event);
+            const art = document.getElementById('fufuArt');
+            clearFufuActionTimers();
+            if(!art || art.dataset.mode !== 'sprite' || direction !== fufuPet.lastDirection) {
+                setFufuDirectionFrame(direction);
+            }
+            setFufuMode('sprite');
+            scheduleFufuIdle();
+        }
+
+        function getFufuPositionBounds() {
+            const stage = document.getElementById('fufuStage');
+            const width = stage ? stage.getBoundingClientRect().width : 192;
+            return { min:8, max:Math.max(8, window.innerWidth - width - 8) };
+        }
+
+        function moveFufuContainer(delta) {
+            const widget = document.getElementById('fufuWidget');
+            if(!widget) return;
+            if(fufuPet.positionX === null) fufuPet.positionX = widget.getBoundingClientRect().left;
+            const bounds = getFufuPositionBounds();
+            fufuPet.positionX = Math.max(bounds.min, Math.min(bounds.max, fufuPet.positionX + delta));
+            widget.style.left = `${fufuPet.positionX}px`;
+            widget.style.right = 'auto';
+        }
+
+        function startFufuRunning(direction) {
+            if(!fufuPet.visible) return;
+            clearFufuActionTimers();
+            fufuPet.isMoving = true;
+            fufuPet.moveDirection = direction < 0 ? -1 : 1;
+            fufuPet.actionName = fufuPet.moveDirection > 0 ? 'running-right' : 'running-left';
+            fufuPet.actionFrame = 0;
+            setFufuMode('sprite');
+            setFufuSpritePosition(FUFU_ACTIONS[fufuPet.actionName].row, 0, false);
+            clearInterval(fufuPet.moveTimer);
+            fufuPet.moveTimer = setInterval(() => {
+                const action = FUFU_ACTIONS[fufuPet.actionName];
+                if(!action) return;
+                moveFufuContainer(fufuPet.moveDirection * 6);
+                fufuPet.actionFrame = (fufuPet.actionFrame + 1) % action.frames;
+                setFufuSpritePosition(action.row, fufuPet.actionFrame);
+            }, FUFU_ACTIONS[fufuPet.actionName].frameDelay);
+        }
+
+        function stopFufuRunning() {
+            clearInterval(fufuPet.moveTimer);
+            fufuPet.moveTimer = null;
+            if(!fufuPet.isMoving) return;
+            fufuPet.isMoving = false;
+            fufuPet.actionName = null;
+            restoreFufuAfterAction();
+        }
+
+        function isFufuEditableTarget(target) {
+            return Boolean(target && (target.matches('input, textarea, select, [contenteditable="true"]') || target.isContentEditable));
+        }
+
+        function handleFufuKeyDown(event) {
+            if(!fufuPet.visible || isFufuEditableTarget(event.target)) return;
+            const key = event.key.toLowerCase();
+            const direction = key === 'arrowright' || key === 'd' ? 1 : (key === 'arrowleft' || key === 'a' ? -1 : 0);
+            if(!direction) return;
+            event.preventDefault();
+            fufuPet.pressedKeys.add(key);
+            if(!fufuPet.isMoving || fufuPet.moveDirection !== direction) startFufuRunning(direction);
+        }
+
+        function handleFufuKeyUp(event) {
+            if(isFufuEditableTarget(event.target)) return;
+            const key = event.key.toLowerCase();
+            if(!fufuPet.pressedKeys.has(key)) return;
+            event.preventDefault();
+            fufuPet.pressedKeys.delete(key);
+            const nextDirection = Array.from(fufuPet.pressedKeys).some(item => item === 'arrowright' || item === 'd')
+                ? 1
+                : (Array.from(fufuPet.pressedKeys).some(item => item === 'arrowleft' || item === 'a') ? -1 : 0);
+            if(nextDirection) startFufuRunning(nextDirection);
+            else stopFufuRunning();
+        }
+
+        function handleFufuWindowBlur() {
+            fufuPet.pressedKeys.clear();
+            stopFufuRunning();
+        }
 
         function initFufuPet() {
             updateFufuAuthState();
@@ -3034,11 +3247,12 @@
             const widget = document.getElementById('fufuWidget');
             const toggle = document.getElementById('fufuToggleBtn');
             if(!widget) return;
-            const unlocked = Boolean(window.currentUser);
+            // 福福是公开站宠，不再依赖登录状态。
+            const unlocked = true;
             widget.classList.toggle('is-unlocked', unlocked);
             widget.classList.toggle('is-locked', !unlocked);
-            widget.classList.toggle('is-visible', unlocked && fufuPet.visible);
-            widget.classList.toggle('is-hidden', unlocked && !fufuPet.visible);
+            widget.classList.toggle('is-visible', fufuPet.visible);
+            widget.classList.toggle('is-hidden', !fufuPet.visible);
             if(toggle) {
                 const label = fufuPet.visible ? '隐藏福福' : '显示福福';
                 toggle.setAttribute('aria-label', label);
@@ -3053,11 +3267,19 @@
             fufuPet.visible = !fufuPet.visible;
             localStorage.setItem('fufuPetVisible', fufuPet.visible ? 'true' : 'false');
             updateFufuAuthState();
-            if(fufuPet.visible) showFufuBubble('福福回来啦！', 1600);
+            if(fufuPet.visible) {
+                setFufuMode('idle');
+                showFufuBubble('福福回来啦！', 1600);
+            } else {
+                clearTimeout(fufuPet.mouseIdleTimer);
+                clearFufuActionTimers();
+                fufuPet.pressedKeys.clear();
+                stopFufuRunning();
+            }
         }
 
         function triggerFufuJumpSpin() {
-            if(!window.currentUser || !fufuPet.visible) return;
+            if(!fufuPet.visible) return;
             const stage = document.getElementById('fufuStage');
             if(!stage) return;
             stage.classList.remove('is-jumping');
@@ -3069,7 +3291,7 @@
 
         function showFufuBubble(text, duration=2500) {
             const bubble = document.getElementById('fufuBubble');
-            if(!bubble || !window.currentUser || !fufuPet.visible) return;
+            if(!bubble || !fufuPet.visible) return;
             bubble.textContent = text;
             bubble.classList.add('active');
             clearTimeout(fufuPet.bubbleTimer);
@@ -3077,11 +3299,13 @@
         }
 
         function handleFufuClick() {
-            if(!window.currentUser) {
-                openAuthModal();
-                return;
-            }
             triggerFufuJumpSpin();
+            if(fufuPet.isMoving) {
+                fufuPet.pressedKeys.clear();
+                stopFufuRunning();
+            }
+            const action = FUFU_CLICK_ACTIONS[Math.floor(Math.random() * FUFU_CLICK_ACTIONS.length)];
+            playFufuAction(action);
             const message = FUFU_MESSAGES[Math.floor(Math.random() * FUFU_MESSAGES.length)];
             showFufuBubble(message, 2500);
         }
@@ -3091,6 +3315,13 @@
         }
 
         function initFufuInteractions() {
+            if(fufuPet.interactionsReady) return;
+            fufuPet.interactionsReady = true;
+            setFufuMode('idle');
+            document.addEventListener('mousemove', handleFufuMouseMove, { passive:true });
+            document.addEventListener('keydown', handleFufuKeyDown);
+            document.addEventListener('keyup', handleFufuKeyUp);
+            window.addEventListener('blur', handleFufuWindowBlur);
             document.addEventListener('click', e => {
                 const link = e.target.closest('a[target="_blank"], .card-btn-play, .blind-play-link');
                 if(link) triggerFufuJumpSpin();
@@ -3348,6 +3579,12 @@
 
         function escapeAttr(value) {
             return escapeHTML(value).replace(/`/g, '&#96;');
+        }
+
+        function handleGameImageError(image, game) {
+            if(!image || image.dataset.fallbackApplied === 'true') return;
+            image.dataset.fallbackApplied = 'true';
+            image.src = getFallbackImageUrl(game);
         }
 
         function renderCreativeMarket() {
@@ -3902,7 +4139,8 @@
                 let card = document.createElement('div'); card.className = 'game-card';
                 card.setAttribute('data-game-id', game.id);
                 card.innerHTML = `
-                    <div class="game-thumb" style="background-image:url('${escapeAttr(imageUrl)}');">
+                    <div class="game-thumb">
+                        <img class="game-cover" src="${escapeAttr(imageUrl)}" alt="${escapeAttr(game.name)}" loading="eager" decoding="async">
                         <div class="popularity-badge">🔥 ${pop.toLocaleString()} ${LANG[currentLang].popularityPlayed}</div>
                         <div class="popularity-num-detailed">${pop} ${LANG[currentLang].popularityTimes}</div>
                         <div class="card-overlay">
@@ -3936,6 +4174,9 @@
                     }
                 });
                 grid.appendChild(card);
+
+                const cover = card.querySelector('.game-cover');
+                if(cover) cover.addEventListener('error', () => handleGameImageError(cover, game));
 
                 // 为当前卡片的反应按钮绑定云端点击事件
                 card.querySelectorAll('.reaction-item').forEach(item => {
@@ -4434,13 +4675,16 @@
             let saved = localStorage.getItem('preferredLang');
             if(saved && saved!==currentLang) switchLanguage(saved);
             renderSkeletons();
-            initPopularity().finally(() => {
-                initBanner();
-                let games=filterGames();
-                renderGames(games.slice(0,state.displayedGames));
-                updateLoadMoreBtn(games.length);
-                // 🔥 在这里加载云端表情
-                loadReactions();
+            initBanner();
+            let games=filterGames();
+            renderGames(games.slice(0,state.displayedGames));
+            updateLoadMoreBtn(games.length);
+            loadReactions();
+            initPopularity().then(() => {
+                games.slice(0,state.displayedGames).forEach(game => updatePopularityDisplay(game.id, false));
+                if(document.getElementById('bannerWrapper')) buildBannerSlides();
+            }).catch(error => {
+                console.warn('Game popularity initialization failed:', error);
             });
             document.getElementById('gameModal').addEventListener('click', function(e){
                 if(e.target===this) closeModal();
