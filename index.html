@@ -4,7 +4,7 @@
 
 <head>
 
-    <script>window.__EXPECTED_BUILD__ = "20261028-enddeco2";</script>
+    <script>window.__EXPECTED_BUILD__ = "20261028-perf1";</script>
 
     <meta charset="UTF-8">
 
@@ -40,27 +40,27 @@
 
     <meta name="twitter:image" content="https://fuunio.com/assets/logo.png">
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://udoiblaukruprjnhvrql.supabase.co" crossorigin>
 
-    <link rel="stylesheet" href="assets/fonts/fonts.css?v=20261028-enddeco2">
+    <link rel="stylesheet" href="assets/fonts/fonts.css?v=20261028-perf1">
 
-    <link rel="stylesheet" href="assets/vendor/fontawesome/css/icons.css?v=20261028-enddeco2">
-
-    
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/icons.css?v=20261028-perf1">
 
     
 
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png?v=20261028-enddeco2">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon.png?v=20261028-enddeco2">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png?v=20261028-enddeco2">
+    
 
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=20261028-enddeco2">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png?v=20261028-perf1">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon.png?v=20261028-perf1">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png?v=20261028-perf1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=20261028-perf1">
 
     
 
-    <link rel="stylesheet" href="styles.css?v=20261028-enddeco2">
+    <link rel="stylesheet" href="styles.css?v=20261028-perf1">
 
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="assets/vendor/supabase.js?v=20261028-perf1"></script>
 
 </head>
 
@@ -228,7 +228,8 @@
 
             <a href="#" class="logo" onclick="window.__openSiteHome ? window.__openSiteHome() : resetToHome(); return false;">
 
-                <img class="logo-img" src="assets/logo.webp" alt="" aria-hidden="true" width="42" height="42" decoding="async" onerror="window.handleLogoImageError && window.handleLogoImageError(this)">
+                <link rel="preload" as="image" href="assets/logo.webp">
+                <img class="logo-img" src="assets/logo.webp" fetchpriority="high" alt="" aria-hidden="true" width="42" height="42" decoding="async" onerror="window.handleLogoImageError && window.handleLogoImageError(this)">
 
                 <span class="logo-img-fallback" hidden aria-hidden="true">F</span>
 
@@ -848,7 +849,7 @@
 
     
 
-    <script type="module" src="script.js?v=20261028-enddeco2"></script>
+    <script type="module" src="script.js?v=20261028-perf1"></script>
 
 </body>
 
