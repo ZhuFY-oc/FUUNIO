@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+    <script>window.__EXPECTED_BUILD__ = "20261028-enddeco2";</script>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+    <title>Fuunio - 在线游戏聚合平台</title>
+
+    <meta name="description" content="Fuunio 是精选网页游戏聚合平台：io 对战、射击、生存、休闲小游戏，打开浏览器即点即玩，无需下载安装。">
+
+    <meta name="theme-color" content="#0f172a">
+
+    <link rel="canonical" href="https://fuunio.com/">
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:site_name" content="Fuunio">
+
+    <meta property="og:title" content="Fuunio - 在线游戏聚合平台">
+
+    <meta property="og:description" content="精选网页游戏聚合平台：io 对战、射击、生存、休闲小游戏，即点即玩。">
+
+    <meta property="og:url" content="https://fuunio.com/">
+
+    <meta property="og:image" content="https://fuunio.com/assets/logo.png">
+
+    <meta property="og:locale" content="zh_CN">
+
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta name="twitter:title" content="Fuunio - 在线游戏聚合平台">
+
+    <meta name="twitter:description" content="精选网页游戏聚合平台：io 对战、射击、生存、休闲小游戏，即点即玩。">
+
+    <meta name="twitter:image" content="https://fuunio.com/assets/logo.png">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+    <link rel="stylesheet" href="assets/fonts/fonts.css?v=20261028-enddeco2">
+
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/icons.css?v=20261028-enddeco2">
+
+    
+
+    
+
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png?v=20261028-enddeco2">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon.png?v=20261028-enddeco2">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png?v=20261028-enddeco2">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=20261028-enddeco2">
+
+    
+
+    <link rel="stylesheet" href="styles.css?v=20261028-enddeco2">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body class="home-on">
+
+    <!-- 首页：分层景深视差（网站介绍） -->
+    <section class="site-home" id="siteHome" aria-label="Fuunio 首页">
+        <div class="hp-scroll" id="hpScroll">
+
+            <section class="hp-scene hp-hero" id="hpHero" style="--hp-len:140vh">
+                <div class="hp-pin">
+                    <div class="hp-spot" id="hpSpot" aria-hidden="true"></div>
+                    <div class="hp-layer hp-grid" data-speed="0.15" aria-hidden="true"></div>
+                    <div class="hp-layer hp-glow" data-speed="0.3" aria-hidden="true"></div>
+                    <div class="hp-layer hp-shapes" data-speed="0.22" aria-hidden="true">
+                        <span class="hp-shape s1"></span>
+                        <span class="hp-shape s2"></span>
+                        <span class="hp-shape s3"></span>
+                    </div>
+                    <div class="hp-layer hp-cards" id="hpCards" data-speed="0.62" aria-hidden="true"></div>
+                    <div class="hp-layer hp-copy" data-speed="1">
+                        <p class="hp-eyebrow">ONLINE ARCADE · 200 GAMES</p>
+                        <h1 class="hp-title hp-brand">FUUNIO<br><em>在线小游戏导航网站</em></h1>
+                        <p class="hp-sub">200+ 小游戏 · 定时更新 · 点开即玩</p>
+                        <p class="hp-scrolldown">SCROLL DOWN <span aria-hidden="true">↓</span></p>
+                    </div>
+                    <div class="hp-ring-actions">
+                        <button class="hp-ring-enter" id="hpRingEnter" type="button"
+                                onclick="(function(){var s=document.getElementById('hpScroll'),a=document.getElementById('hpAbout');if(s&&a)s.scrollTo({top:a.offsetTop,behavior:'smooth'});})()">网站介绍 ↓</button>
+                        <button class="hp-ring-enter is-solid" id="hpRingGo" type="button"
+                                onclick="window.__enterSite && window.__enterSite('home')">进入网站 →</button>
+                    </div>
+                    <div class="hp-marquee" aria-hidden="true">
+                        <div class="hp-marquee-track" id="hpMarquee1"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-about" id="hpAbout" style="--hp-len:175vh">
+                <div class="hp-pin">
+                    <div class="hp-about-copy">
+                        <p class="hp-eyebrow">ABOUT</p>
+                        <h2 class="hp-h2">与众不同的<br><em>游戏聚合页</em></h2>
+                        <ul class="hp-points">
+                            <li><b>每一款都有人写简介</b><span>玩法、难度、适合谁玩，点开就知道该不该玩</span></li>
+                            <li><b>没有广告，也不用登录</b><span>点开即玩，不打断、不弹窗</span></li>
+                            <li><b>按心情找，而不是按名字猜</b><span>6 个分类加兴趣营地，帮你缩小选择</span></li>
+                        </ul>
+                    </div>
+                    <div class="hp-stats" id="hpStats" aria-hidden="true"></div>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-cats" id="hpCats" style="--hp-len:150vh">
+                <div class="hp-pin">
+                    <div class="hp-sec-head">
+                        <p class="hp-eyebrow">LIBRARY</p>
+                        <h2 class="hp-h2">六个分类<br><em>按兴趣挑</em></h2>
+                    </div>
+                    <div class="hp-cat-row" id="hpCatRow"></div>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-sections" id="hpSections" style="--hp-len:165vh">
+                <div class="hp-pin">
+                    <div class="hp-sec-head">
+                        <p class="hp-eyebrow">SECTIONS</p>
+                        <h2 class="hp-h2">四个入口<br><em>四种逛法</em></h2>
+                    </div>
+                    <div class="hp-sec-cards" id="hpSecCards"></div>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-steps" id="hpSteps" style="--hp-len:165vh">
+                <div class="hp-pin">
+                    <div class="hp-sec-head">
+                        <p class="hp-eyebrow">HOW IT WORKS</p>
+                        <h2 class="hp-h2">进入游戏<br><em>只要三步</em></h2>
+                    </div>
+                    <div class="hp-step-row" id="hpStepRow"></div>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-promise" id="hpPromise" style="--hp-len:150vh">
+                <div class="hp-pin">
+                    <div class="hp-sec-head">
+                        <p class="hp-eyebrow">PROMISE</p>
+                        <h2 class="hp-h2">我们不做<br><em>这几件事</em></h2>
+                    </div>
+                    <div class="hp-promise-grid" id="hpPromiseGrid"></div>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-founders" id="hpFounders" style="--hp-len:108vh">
+                <div class="hp-pin">
+                    <div class="hp-sec-head">
+                        <p class="hp-eyebrow">FOUNDERS</p>
+                        <h2 class="hp-h2">创始人</h2>
+                        <p class="hp-sec-sub">由他们发起并持续维护，团队里还有其他伙伴一起出力</p>
+                    </div>
+                    <div class="hp-founder-grid" id="hpFounderGrid"></div>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-join" id="hpJoin" style="--hp-len:150vh">
+                <div class="hp-pin">
+                    <div class="hp-sec-head">
+                        <p class="hp-eyebrow">JOIN US</p>
+                        <h2 class="hp-h2">加入我们</h2>
+                        <p class="hp-sec-sub">能编辑代码、懂 UI 设计、能运营官号的人，都欢迎</p>
+                    </div>
+                    <div class="hp-join-grid" id="hpJoinGrid"></div>
+                    <a class="hp-join-cta" href="mailto:fuunio@qq.com?subject=%E6%83%B3%E5%8A%A0%E5%85%A5%20Fuunio%20%C2%B7%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D">写信给我们 · fuunio@qq.com</a>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-follow" id="hpFollow" style="--hp-len:140vh">
+                <div class="hp-pin">
+                    <div class="hp-sec-head">
+                        <p class="hp-eyebrow">FOLLOW US</p>
+                        <h2 class="hp-h2">关注<em>我们</em></h2>
+                        <p class="hp-sec-sub">抖音、B站、小红书、快手、QQ 频道，第一时间看到新游戏</p>
+                    </div>
+                    <div class="hp-follow-grid">
+                        <a class="hp-follow-card" href="#" data-social="douyin" target="_blank" rel="noopener"><img src="assets/social/douyin.png" alt="" loading="lazy" decoding="async"><b>抖音</b><span>短视频 · 新游速递</span></a>
+                        <a class="hp-follow-card" href="#" data-social="bilibili" target="_blank" rel="noopener"><img src="assets/social/bilibili.png" alt="" loading="lazy" decoding="async"><b>哔哩哔哩</b><span>实况 · 玩法合集</span></a>
+                        <a class="hp-follow-card" href="#" data-social="xiaohongshu" target="_blank" rel="noopener"><img src="assets/social/xiaohongshu.png" alt="" loading="lazy" decoding="async"><b>小红书</b><span>图文 · 游戏安利</span></a>
+                        <a class="hp-follow-card" href="#" data-social="kuaishou" target="_blank" rel="noopener"><img src="assets/social/kuaishou.png" alt="" loading="lazy" decoding="async"><b>快手</b><span>短视频 · 高光时刻</span></a>
+                        <a class="hp-follow-card" href="#" data-social="qq" target="_blank" rel="noopener"><img src="assets/social/qq.png" alt="" loading="lazy" decoding="async"><b>QQ 频道</b><span>玩家社区 · 反馈</span></a>
+                        <a class="hp-follow-card" href="mailto:fuunio@qq.com" target="_blank" rel="noopener"><img src="assets/social/mail.png" alt="" loading="lazy" decoding="async"><b>邮箱</b><span>fuunio@qq.com</span></a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hp-scene hp-end" id="hpEnd" style="--hp-len:155vh">
+                <div class="hp-marquee is-end" aria-hidden="true">
+                    <div class="hp-marquee-track" id="hpMarquee2"></div>
+                </div>
+                <div class="hp-pin">
+                    <div class="hp-end-deco" aria-hidden="true">
+                        <span class="hp-end-glow"></span>
+                        <span class="hp-end-ring is-out"></span>
+                        <span class="hp-end-ring is-in"></span>
+                        <span class="hp-end-orbit"><i style="left:50.00%;top:3.00%;width:8px;height:8px;opacity:0.2"></i><i style="left:77.63%;top:11.98%;width:5px;height:5px;opacity:0.14"></i><i style="left:94.70%;top:35.48%;width:8px;height:8px;opacity:0.2"></i><i style="left:94.70%;top:64.52%;width:5px;height:5px;opacity:0.14"></i><i style="left:77.63%;top:88.02%;width:8px;height:8px;opacity:0.2"></i><i style="left:50.00%;top:97.00%;width:5px;height:5px;opacity:0.14"></i><i style="left:22.37%;top:88.02%;width:8px;height:8px;opacity:0.2"></i><i style="left:5.30%;top:64.52%;width:5px;height:5px;opacity:0.14"></i><i style="left:5.30%;top:35.48%;width:8px;height:8px;opacity:0.2"></i><i style="left:22.37%;top:11.98%;width:5px;height:5px;opacity:0.14"></i></span>
+                    </div>
+                    <h2 class="hp-h2">准备好了吗</h2>
+                    <p class="hp-end-sub">畅玩 200+ 款游戏</p>
+                    <button class="hp-enter-btn" id="hpEnterBtn" type="button" onclick="window.__enterSite && window.__enterSite('home')">进入网站 ↓</button>
+                    <p class="hp-hint">200 款游戏 · 6 个分类 · 持续更新</p>
+                </div>
+            </section>
+
+        </div>
+        <div class="hp-tint" aria-hidden="true"></div>
+        <div class="hp-particles" id="hpParticles" aria-hidden="true"></div>
+        <nav class="hp-dots" id="hpDots" aria-label="章节导航"></nav>
+        <div class="hp-progress" aria-hidden="true"><i id="hpProgressBar"></i></div>
+    </section>
+
+    <nav class="navbar">
+
+        <div class="nav-left">
+
+            <button class="hamburger" id="sidebarToggleBtn" onclick="toggleSidebar()" aria-label="收起侧导航" title="收起侧导航"><i class="fas fa-bars" aria-hidden="true"></i></button>
+
+            <a href="#" class="logo" onclick="window.__openSiteHome ? window.__openSiteHome() : resetToHome(); return false;">
+
+                <img class="logo-img" src="assets/logo.webp" alt="" aria-hidden="true" width="42" height="42" decoding="async" onerror="window.handleLogoImageError && window.handleLogoImageError(this)">
+
+                <span class="logo-img-fallback" hidden aria-hidden="true">F</span>
+
+                <span class="logo-text">
+
+                    <b>FUUNIO</b><em>.COM</em>
+
+                </span>
+
+            </a>
+
+        </div>
+
+        <div class="nav-center">
+
+            <div class="search-box"><span class="search-icon"><i class="fas fa-magnifying-glass" aria-hidden="true"></i></span><input type="text" class="search-input" placeholder="搜索游戏..." id="searchInput" autocomplete="off" oninput="handleSearch(this.value)"><div class="search-suggest" id="searchSuggest" role="listbox" aria-label="搜索建议"></div></div>
+
+            <button class="dice-nav-btn" id="diceNavBtn" onclick="rollDice()" aria-label="随缘玩" title="随缘玩"><span class="dice-3d" aria-hidden="true"><span class="dice-3d__cube"><span class="dice-3d__face d3-one"></span><span class="dice-3d__face d3-two"></span><span class="dice-3d__face d3-three"></span><span class="dice-3d__face d3-four"></span><span class="dice-3d__face d3-five"></span><span class="dice-3d__face d3-six"></span></span></span></button>
+
+            <button class="interest-camp-nav" id="interestCampNavBtn" title="兴趣营地" onclick="showInterestCamp()"><i class="fas fa-campground" aria-hidden="true"></i><span>兴趣营地</span></button>
+
+            <button class="creative-market-nav" id="creativeMarketNavBtn" title="玩家工坊" onclick="showCreativeMarket()"><i class="fas fa-screwdriver-wrench" aria-hidden="true"></i><span>玩家工坊</span></button>
+
+        </div>
+
+        <div class="nav-right">
+
+            <!--登录注册入口已隐藏
+
+            <button class="auth-btn" id="authNavBtn" onclick="openAuthModal()" aria-label="登录" title="登录"><i class="fas fa-user"></i><span id="authNavText">登录</span></button>
+
+            -->
+
+            <button class="blind-box-nav" id="dailyBlindBoxBtn" title="每日盲盒" onclick="openDailyBlindBox()"><i class="fas fa-gift" aria-hidden="true"></i><span>每日盲盒</span></button>
+
+            <div class="lang-switcher" id="langSwitcher">
+
+                <button class="lang-btn" onclick="toggleLangDropdown()"><i class="fas fa-globe" aria-hidden="true"></i><span id="currentLang">中文</span><i class="fas fa-chevron-down lang-chevron" aria-hidden="true"></i></button>
+
+                <div class="lang-dropdown" id="langDropdown">
+
+                    <div class="lang-option active-lang" data-lang="zh" onclick="switchLanguage('zh')">中文</div>
+
+                    <div class="lang-option" data-lang="en" onclick="switchLanguage('en')">English</div>
+
+                    <div class="lang-option" data-lang="ja" onclick="switchLanguage('ja')">日本語</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="main-container">
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-section"><ul class="sidebar-menu">
+
+                <li class="sidebar-item active" data-category="all" onclick="filterByCategory('all')"><span class="sidebar-icon"><i class="fas fa-home"></i></span><span class="sidebar-text">全部游戏</span></li>
+
+                <li class="sidebar-item" data-category="hot" onclick="filterByCategory('hot')"><span class="sidebar-icon"><i class="fas fa-fire"></i></span><span class="sidebar-text">热门游戏</span><span class="sidebar-badge">HOT</span></li>
+
+                <li class="sidebar-item" data-category="new" onclick="filterByCategory('new')"><span class="sidebar-icon"><i class="fas fa-star"></i></span><span class="sidebar-text">新游戏</span></li>
+
+            </ul></div>
+
+            <div class="sidebar-section"><ul class="sidebar-menu">
+
+                <li class="sidebar-item" data-category="action" onclick="filterByCategory('action')"><span class="sidebar-icon"><i class="fas fa-fist-raised"></i></span><span class="sidebar-text">动作</span></li>
+
+                <li class="sidebar-item" data-category="casual" onclick="filterByCategory('casual')"><span class="sidebar-icon"><i class="fas fa-gamepad"></i></span><span class="sidebar-text">休闲</span></li>
+
+                <li class="sidebar-item" data-category="io" onclick="filterByCategory('io')"><span class="sidebar-icon"><i class="fas fa-globe"></i></span><span class="sidebar-text">.io游戏</span></li>
+
+                <li class="sidebar-item" data-category="strategy" onclick="filterByCategory('strategy')"><span class="sidebar-icon"><i class="fas fa-chess"></i></span><span class="sidebar-text">策略</span></li>
+
+                <li class="sidebar-item" data-category="puzzle" onclick="filterByCategory('puzzle')"><span class="sidebar-icon"><svg class="sidebar-svg" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18h5"/><path d="M10.5 21h3"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg></span><span class="sidebar-text">益智</span></li>
+
+                <li class="sidebar-item" data-category="racing" onclick="filterByCategory('racing')"><span class="sidebar-icon"><i class="fas fa-flag-checkered"></i></span><span class="sidebar-text">竞速</span></li>
+
+            </ul></div>
+
+            <div class="sidebar-section sidebar-section-links">
+
+                <div class="sidebar-group-title" id="footerPlatformTitle">平台</div>
+
+                <ul class="sidebar-menu sidebar-links">
+
+                    <li><a id="footerAboutLink" onclick="showSitePolicy('about', this, event); return false;">关于我们</a></li>
+
+                    <li><a id="footerContactLink" onclick="showSitePolicy('contact', this, event); return false;">联系我们</a></li>
+
+                    <li><a id="footerFaqLink" onclick="showSitePolicy('faq', this, event); return false;">常见问题</a></li>
+
+                </ul>
+
+                <div class="sidebar-group-title" id="footerTermsTitle">条款</div>
+
+                <ul class="sidebar-menu sidebar-links">
+
+                    <li><a id="footerServiceTermsLink" onclick="showSitePolicy('terms', this, event); return false;">服务条款</a></li>
+
+                    <li><a id="footerPrivacyLink" onclick="showSitePolicy('privacy', this, event); return false;">隐私政策</a></li>
+
+                    <li><a id="footerCookieLink" onclick="showSitePolicy('cookie', this, event); return false;">Cookie政策</a></li>
+
+                </ul>
+
+            </div>
+
+            <div class="sidebar-social" id="sidebarSocial">
+
+                <div class="sidebar-social-title">关注我们</div>
+
+                <div class="sidebar-social-row">
+
+                    <a class="social-btn" href="mailto:fuunio@qq.com" title="邮箱：fuunio@qq.com" aria-label="邮箱"><img src="assets/social/mail.png" alt="" loading="lazy" decoding="async"></a>
+
+                    <a class="social-btn" href="#" data-social="douyin" title="抖音官号" aria-label="抖音"><img src="assets/social/douyin.png" alt="" loading="lazy" decoding="async"></a>
+
+                    <a class="social-btn" href="#" data-social="bilibili" title="哔哩哔哩官号" aria-label="哔哩哔哩"><img src="assets/social/bilibili.png" alt="" loading="lazy" decoding="async"></a>
+
+                    <a class="social-btn" href="#" data-social="xiaohongshu" title="小红书官号" aria-label="小红书"><img src="assets/social/xiaohongshu.png" alt="" loading="lazy" decoding="async"></a>
+
+                    <a class="social-btn" href="#" data-social="kuaishou" title="快手官号" aria-label="快手"><img src="assets/social/kuaishou.png" alt="" loading="lazy" decoding="async"></a>
+
+                    <a class="social-btn" href="#" data-social="qq" title="QQ 频道" aria-label="QQ 频道"><img src="assets/social/qq.png" alt="" loading="lazy" decoding="async"></a>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <main class="content">
+
+
+
+            <div class="page-view active" id="homePage">
+
+                <h1 class="visually-hidden">Fuunio 在线游戏聚合平台</h1>
+
+                <div class="banner-carousel" id="bannerCarousel">
+
+                    <div class="banner-wrapper" id="bannerWrapper"></div>
+
+                    <button class="banner-nav prev" onclick="prevBanner()" aria-label="上一张"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
+
+                    <button class="banner-nav next" onclick="nextBanner()" aria-label="下一张"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
+
+                    <div class="banner-indicators" id="bannerIndicators"></div>
+
+                </div>
+
+
+
+                <section class="games-section"><div class="section-header"><div class="section-heading"><h2 class="section-title" id="sectionTitle">全部游戏</h2><span class="section-count" id="sectionCount">200 款</span></div><div class="filter-chips" id="filterChips"><button class="chip active" data-category="all" onclick="filterByCategory('all')">全部</button><button class="chip" data-category="hot" onclick="filterByCategory('hot')">热门</button><button class="chip" data-category="new" onclick="filterByCategory('new')">新游</button><button class="chip" data-category="action" onclick="filterByCategory('action')">动作</button><button class="chip" data-category="puzzle" onclick="filterByCategory('puzzle')">益智</button><button class="chip" data-category="casual" onclick="filterByCategory('casual')">休闲</button><button class="chip" data-category="strategy" onclick="filterByCategory('strategy')">策略</button><button class="chip" data-category="racing" onclick="filterByCategory('racing')">竞速</button><button class="chip" data-category="io" onclick="filterByCategory('io')">.io</button></div></div><div class="games-grid" id="gamesGrid"></div></section>
+
+                <div class="load-more" id="loadMore"><button class="load-more-btn" onclick="loadMoreGames()">加载更多游戏</button></div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <section class="page-view creative-market-page" id="creativeMarketPage" aria-labelledby="creativeMarketTitle">
+
+                <div class="creative-market-hero">
+
+                    <h1 class="creative-market-title" id="creativeMarketTitle">🛠️ 玩家工坊</h1>
+
+                    <p class="creative-market-subtitle" id="creativeMarketSubtitle">这里汇集了 Fuunio 玩家自制的 HTML 小游戏，每一款都是创造力的结晶。</p>
+
+                    <p class="creative-market-note" id="creativeMarketNote">本站仅提供作品链接导航，游戏运行于开发者自有服务器。如发现违规内容，请通过“联系我们”举报。</p>
+
+                </div>
+
+                <div class="creative-market-submit">
+
+                    <a class="creative-submit-btn" id="creativeSubmitBtn" href="https://wj.qq.com/s2/28357343/f7ty/" target="_blank" rel="noopener noreferrer">📤 提交你的作品</a>
+
+                    <a class="creative-submit-mail" id="creativeSubmitMail" href="mailto:fuunio@qq.com?subject=%E6%8F%90%E4%BA%A4%E6%B8%B8%E6%88%8F&body=%E6%B8%B8%E6%88%8F%E5%90%8D%E7%A7%B0%EF%BC%9A%0A%E8%AE%BF%E9%97%AE%E9%93%BE%E6%8E%A5%EF%BC%9A%0A%E7%AE%80%E4%BB%8B%EF%BC%9A%0A%E4%BD%9C%E8%80%85%EF%BC%9A">表单打不开？直接邮件提交</a>
+
+                    <p class="creative-submit-copy" id="creativeSubmitCopy">用 HTML 写了好玩的小游戏？来这里展示给更多人玩！</p>
+
+                </div>
+
+                <div class="creative-market-submit">
+
+                    <a class="player-lounge-btn" id="creativeLoungeBtn" href="https://pd.qq.com/s/af6be3xv8?b=9" target="_blank" rel="noopener noreferrer">💬 加入玩家大厅</a>
+
+                    <p class="creative-submit-copy" id="creativeLoungeCopy">进入 QQ 频道，和 Fuunio 玩家一起交流作品、反馈和新玩法。</p>
+
+                </div>
+
+                <div class="creative-market-grid" id="creativeMarketGrid" aria-live="polite"></div>
+
+            </section>
+
+
+
+            <section class="page-view interest-page" id="interestPage" aria-labelledby="interestTitle">
+
+                <div class="interest-hero">
+
+                    <div class="interest-hero-copy">
+
+                        <h1 class="interest-title" id="interestTitle">mk48.io</h1>
+
+                        <p class="interest-tagline" id="interestTagline">指挥你的战舰，在广阔海域中与其他玩家展开生死对决。升级舰船、制定战术、征服海洋——这是一场属于船长的终极考验。</p>
+
+                        <div class="interest-actions">
+
+                            <a class="interest-primary" id="interestPlayBtn" href="https://mk48.io" target="_blank" rel="noopener noreferrer">🎮 进入游戏</a>
+
+                            <a class="interest-secondary" id="interestCommunityBtn" href="https://pd.qq.com/s/af6be3xv8?b=9" target="_blank" rel="noopener noreferrer">💬 加入玩家社区</a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="interest-cover" id="interestCover" aria-label="mk48.io 游戏封面占位">M</div>
+
+                </div>
+
+
+
+                <section class="interest-section" aria-labelledby="interestOverviewTitle">
+
+                    <h2 class="interest-section-title" id="interestOverviewTitle">📖 关于这款游戏</h2>
+
+                    <div class="interest-info-grid" id="interestResourceGrid">
+
+                        <!-- mk48.io 资料数据：后续可在 JS 的 MK48_RESOURCES 数组中手动修改。 -->
+
+                    </div>
+
+                </section>
+
+
+
+                <section class="interest-contribute" id="interestContribute" aria-label="玩家投稿">
+
+                    <p id="interestContributeText">你有更好的战术心得？或者发现了我们遗漏的技巧？</p>
+
+                    <a class="developer-submit-btn" id="shareGuideBtn" href="https://pd.qq.com/s/af6be3xv8?b=9" target="_blank" rel="noopener noreferrer">📤 分享我的攻略</a>
+
+                </section>
+
+
+
+                <nav class="interest-footer-nav" id="interestFooterNav" aria-label="兴趣营地底部导航">
+
+                    <a id="interestFooterCreative" href="#" onclick="showCreativeMarket(); return false;">浏览玩家作品 → 玩家工坊</a>
+
+                    <a href="#" onclick="resetToHome(); return false;">返回首页</a>
+
+                </nav>
+
+            </section>
+
+
+
+
+
+
+
+        </main>
+
+    </div>
+
+
+
+    <footer class="footer">
+
+        <div class="footer-bottom">
+
+            <img class="footer-mark" src="assets/logo.webp" alt="" aria-hidden="true">
+
+            <p id="footerCopyright">© 2026 Fuunio. All rights reserved. 未经许可禁止转载、复制、镜像本站内容与代码。</p>
+
+            <button class="footer-top" id="footerTopBtn" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部"><span id="footerTopLabel">回到顶部</span> <span aria-hidden="true">↑</span></button>
+
+        </div>
+
+        <div class="admin-panel-entry">
+
+            <button class="admin-stats-btn" id="adminStatsBtn" type="button" onclick="openStatsPanel()" style="display:none;">
+
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
+
+                后台数据面板
+
+            </button>
+
+        </div>
+
+    </footer>
+
+
+
+    <div class="stats-modal" id="statsPanel" aria-hidden="true">
+
+        <div class="stats-panel" role="dialog" aria-modal="true" aria-labelledby="statsPanelTitle">
+
+            <div class="stats-header">
+
+                <div>
+
+                    <h3 id="statsPanelTitle">后台数据面板</h3>
+
+                    <p class="stats-desc">最近 30 天 daily_visits_stats 访问数据</p>
+
+                </div>
+
+                <button class="stats-close" type="button" onclick="closeStatsPanel()" aria-label="关闭">×</button>
+
+            </div>
+
+            <div class="stats-body">
+
+                <div class="stats-status" id="statsStatus">等待查询...</div>
+
+                <div class="stats-table-wrap" id="statsTableWrap"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="fufu-widget is-unlocked is-visible" id="fufuWidget" aria-live="polite">
+
+        <div class="fufu-stage" id="fufuStage">
+
+            <div class="fufu-bubble" id="fufuBubble"></div>
+
+            <button class="fufu-character" id="fufuCharacter" type="button" onclick="handleFufuClick()" aria-label="摸摸福福">
+
+                <span class="fufu-jump">
+
+                    <span class="fufu-breathe">
+
+                                <span class="fufu-art" id="fufuArt" data-mode="idle" role="img" aria-label="福福">
+
+                                    <img class="fufu-media fufu-idle" src="assets/fufu/idle.webp" alt="">
+
+                                    <img class="fufu-media fufu-waving" src="assets/fufu/waving.webp" alt="">
+
+                                    <span class="fufu-media fufu-sprite" id="fufuSprite" aria-hidden="true"></span>
+
+                        </span>
+
+                    </span>
+
+                </span>
+
+            </button>
+
+        </div>
+
+        <!--登录解锁福福已隐藏
+
+        <button class="fufu-login-prompt" id="fufuLoginPrompt" type="button" onclick="openAuthModal()">
+
+            🔒 登录解锁福福
+
+        </button>
+
+        -->
+
+        <button class="fufu-toggle" id="fufuToggleBtn" type="button" onclick="toggleFufuPet()" aria-label="隐藏福福" title="隐藏福福">
+
+            <span class="fufu-toggle-icon" aria-hidden="true">×</span>
+
+        </button>
+
+    </div>
+
+
+
+    <div class="fufu-actions-menu" id="fufuActionsMenu" role="dialog" aria-label="动作列表" hidden>
+
+        <div class="fufu-actions-head">
+
+            <span class="fufu-actions-title"><span id="fufuActionsTitleLabel">动作列表</span><span class="fufu-actions-count" id="fufuActionsCount"></span></span>
+
+            <button class="fufu-actions-close" id="fufuActionsClose" type="button" aria-label="关闭动作列表">×</button>
+
+        </div>
+
+        <div class="fufu-actions-body" id="fufuActionsBody"></div>
+
+        <div class="fufu-actions-hint" id="fufuActionsHint">右键 / 长按打开 · Esc 关闭</div>
+
+    </div>
+
+
+
+    <div class="mobile-tabbar">
+
+        <div class="tabbar-items">
+
+            <div class="tabbar-item active" id="tabHome" onclick="resetToHome()"><span class="tabbar-icon">🏠</span><span>首页</span></div>
+
+            <div class="tabbar-item dice-tab" id="tabDice" onclick="rollDice()" aria-label="随缘玩"><span class="dice-3d" aria-hidden="true"><span class="dice-3d__cube"><span class="dice-3d__face d3-one"></span><span class="dice-3d__face d3-two"></span><span class="dice-3d__face d3-three"></span><span class="dice-3d__face d3-four"></span><span class="dice-3d__face d3-five"></span><span class="dice-3d__face d3-six"></span></span></span></div>
+
+            <div class="tabbar-item" id="tabInterestCamp" onclick="showInterestCamp()"><span class="tabbar-icon">⛺</span><span>兴趣营地</span></div>
+
+        <div class="tabbar-item" id="tabCreativeMarket" onclick="showCreativeMarket()"><span class="tabbar-icon">🛠️</span><span>玩家工坊</span></div>
+
+        </div>
+
+    </div>
+
+
+
+    <button class="mobile-blind-float" id="mobileBlindFloatBtn" onclick="openDailyBlindBox()" aria-label="每日盲盒">
+
+        <span class="mobile-blind-icon">🎁</span>
+
+        <span id="mobileBlindFloatText">盲盒</span>
+
+    </button>
+
+
+
+    <button class="mobile-interest-float" id="mobileInterestFloatBtn" onclick="showInterestCamp()" aria-label="兴趣营地" title="兴趣营地">
+
+        <span class="camp-symbol" aria-hidden="true"><i></i></span>
+
+    </button>
+
+
+
+    <div class="daily-blind-modal" id="dailyBlindModal" aria-hidden="true">
+
+        <button class="daily-blind-close" id="dailyBlindCloseBtn" onclick="closeDailyBlindBox()" aria-label="关闭每日盲盒">✕</button>
+
+        <div class="blind-stage" id="blindStage">
+
+            <div class="blind-controller" aria-hidden="true">
+
+                <div class="blind-dpad"></div>
+
+                <div class="blind-abxy"><span></span><span></span><span></span><span></span></div>
+
+            </div>
+
+            <div class="blind-scope" aria-hidden="true"></div>
+
+            <div class="blind-marble" id="blindMarble" aria-hidden="true"></div>
+
+            <div class="blind-brand" aria-hidden="true"><span>F</span><span>u</span><span>u</span><span>n</span><span class="blind-brand-i">ı</span><span>o</span><span>!</span></div>
+
+            <div class="blind-line" aria-hidden="true"></div>
+
+            <div class="blind-slogan" id="blindSlogan">发现你的下一款挚爱</div>
+
+            <div class="blind-box-wrap" id="blindBoxWrap">
+
+                <button class="blind-box" id="blindBox" onclick="openBlindBoxResult()" aria-label="开启每日盲盒"><span>?</span></button>
+
+                <div class="blind-box-hint" id="blindBoxHint">👆 点击盲盒，开启惊喜</div>
+
+            </div>
+
+            <article class="blind-result-card" id="blindResultCard" aria-live="polite"></article>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="game-modal" id="gameModal">
+
+        <div class="modal-content">
+
+            <div class="modal-header"><h3 class="modal-title" id="modalTitle">游戏名称</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+
+            <div class="modal-body" id="modalBody">
+
+                <div class="modal-cover" id="modalCover">
+
+                    <img id="modalCoverImg" alt="" decoding="async">
+
+                </div>
+
+                <div class="game-placeholder">
+
+                    <div class="game-placeholder-icon" id="modalIcon">🎮</div>
+
+                    <div class="game-placeholder-text game-intro-content" id="modalDesc">点击下方按钮在新窗口中打开游戏</div>
+
+                    <button class="game-placeholder-btn" id="modalPlayBtn">在新窗口中游玩</button>
+
+                    <button class="game-intro-btn" id="modalIntroBtn" style="display:none;">📖 游戏介绍</button>
+
+                    <button class="dice-reroll-btn" id="modalRerollBtn" style="display:none;">🎲 再摇一次</button>
+
+                </div>
+
+                <div class="recommend-section" id="recommendSection" style="display:none;">
+
+                    <h4 class="recommend-title">猜你喜欢</h4>
+
+                    <div class="recommend-grid" id="recommendGrid"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="site-policy-modal" id="sitePolicyModal">
+
+        <div class="site-policy-content">
+
+            <div class="site-policy-header"><h3 id="sitePolicyTitle">条款</h3><button class="modal-close" onclick="closeSitePolicyModal()">✕</button></div>
+
+            <div class="site-policy-body" id="sitePolicyBody"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="auth-modal" id="authModal" aria-hidden="true">
+
+        <div class="auth-panel" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+
+            <div class="auth-header">
+
+                <h3 class="auth-title" id="authTitle">账号登录</h3>
+
+                <button class="modal-close" onclick="closeAuthModal()" aria-label="关闭">×</button>
+
+            </div>
+
+            <div class="auth-body">
+
+                <div class="auth-signed-in" id="authSignedIn">
+
+                    <p class="auth-message success" id="authSignedInText">已登录</p>
+
+                    <p class="auth-user-email" id="authUserEmail"></p>
+
+                    <button class="auth-signout" id="authSignOutBtn" onclick="signOutUser()">退出登录</button>
+
+                </div>
+
+                <div id="authGuestPanel">
+
+                    <div class="auth-tabs" role="tablist" aria-label="账号操作">
+
+                        <button class="auth-tab active" id="authLoginTab" type="button" onclick="setAuthMode('login')">登录</button>
+
+                        <button class="auth-tab" id="authSignupTab" type="button" onclick="setAuthMode('signup')">注册</button>
+
+                    </div>
+
+                    <form class="auth-form" id="authForm">
+
+                        <label class="auth-field">
+
+                            邮箱
+
+                            <input class="auth-input" id="authEmail" type="email" autocomplete="email" required>
+
+                        </label>
+
+                        <label class="auth-field">
+
+                            密码
+
+                            <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" minlength="6" required>
+
+                        </label>
+
+                        <button class="auth-submit" id="authSubmitBtn" type="submit">登录</button>
+
+                        <p class="auth-message" id="authMessage"></p>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    
+
+    <script type="module" src="script.js?v=20261028-enddeco2"></script>
+
+</body>
+
+</html>
