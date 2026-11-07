@@ -7448,8 +7448,10 @@
             const items = Array.from(grid.children);
             items.forEach(el => { el.style.marginLeft = ''; });
             if(items.length < 2) return;
-            // 全部加载完成后不再铺满
-            if(state.gamesTotal && items.length >= state.gamesTotal) return;
+            // 仅当还有未加载内容时才铺满；全部加载完则保持正常排列（缺口保留）
+            let total = 0;
+            try { total = filterGames().length; } catch(e) { total = state.gamesTotal || 0; }
+            if(total && items.length >= total) return;
             const cs = getComputedStyle(grid);
             const gap = parseFloat(cs.columnGap) || parseFloat(cs.gap) || 0;
             const rows = new Map();
@@ -8708,7 +8710,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-spread2';
+        const BUILD_VERSION = '20261107-spread3';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
