@@ -8490,7 +8490,6 @@
                 loadReactions();
                 state.isLoading = false;
                 btn.textContent = orig;
-                setTimeout(maybeAutoLoadGames, 420);
             }, 400);
         }
 
@@ -8638,7 +8637,6 @@
             renderGames(games.slice(0,state.displayedGames));
             updateLoadMoreBtn(games.length);
             loadReactions();
-            setTimeout(maybeAutoLoadGames, 600);
             // 窗口宽度变化导致列数变化时，重新按整行对齐（只加不减）
             window.addEventListener('resize', () => {
                 clearTimeout(state.resizeTimer);
@@ -8710,17 +8708,11 @@
             loadMoreGames();
         }
 
-        let autoLoadRaf = 0;
-        window.addEventListener('scroll', () => {
-            if(autoLoadRaf) return;
-            autoLoadRaf = requestAnimationFrame(() => {
-                autoLoadRaf = 0;
-                maybeAutoLoadGames();
-            });
-        }, { passive: true });
+        // 已关闭「滚动自动加载」：只在用户点击「加载更多」时加载一批
+        window.__AUTO_LOAD_OFF__ = true;
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-append1';
+        const BUILD_VERSION = '20261107-load1';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
