@@ -7438,7 +7438,40 @@
                     item.addEventListener('click', handleReactionClick);
                 });
             });
+            spreadGamesLastRow();
         }
+
+        // 末行铺满：卡片宽度保持原样，把剩余空间平均分配给末行间距
+        function spreadGamesLastRow() {
+            const grid = document.getElementById('gamesGrid');
+            if(!grid) return;
+            const items = Array.from(grid.children);
+            items.forEach(el => { el.style.marginLeft = ''; });
+            if(items.length < 2) return;
+            const cs = getComputedStyle(grid);
+            const gap = parseFloat(cs.columnGap) || parseFloat(cs.gap) || 0;
+            const rows = new Map();
+            items.forEach(el => {
+                const top = Math.round(el.offsetTop);
+                if(!rows.has(top)) rows.set(top, []);
+                rows.get(top).push(el);
+            });
+            const tops = Array.from(rows.keys()).sort((a, b) => a - b);
+            const lastRow = rows.get(tops[tops.length - 1]);
+            if(!lastRow || lastRow.length < 2) return;
+            const gridWidth = grid.clientWidth;
+            const used = lastRow.reduce((sum, el) => sum + el.getBoundingClientRect().width, 0) + gap * (lastRow.length - 1);
+            const extra = gridWidth - used;
+            if(extra < 2) return;
+            const per = Math.floor(extra / (lastRow.length - 1));
+            lastRow.forEach((el, i) => { if(i > 0) el.style.marginLeft = per + 'px'; });
+        }
+
+        let __spreadTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(__spreadTimer);
+            __spreadTimer = setTimeout(spreadGamesLastRow, 120);
+        });
 
         function renderSkeletons(count=8) {
             let grid=document.getElementById('gamesGrid'); grid.innerHTML='';
@@ -7447,6 +7480,7 @@
                 d.innerHTML=`<div class="skeleton skeleton-thumb"></div><div class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div></div>`;
                 grid.appendChild(d);
             }
+            spreadGamesLastRow();
         }
 
         // 分类合并 + 一个游戏可属于多个分类
@@ -8668,7 +8702,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-orig1';
+        const BUILD_VERSION = '20261107-spread1';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
