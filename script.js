@@ -7311,6 +7311,8 @@
             e.preventDefault();
             e.stopPropagation();
             const item = e.currentTarget;
+            // 卡片处于背面时，正面的反应按钮不响应（避免点不动、光标转圈）
+            if(item.closest('.game-card.is-flipped')) return;
             const container = item.closest('.game-reactions');
             if(!container || item.disabled) return;
             const gameId = container.dataset.gameId;
@@ -7430,7 +7432,9 @@
                     if(gameModal && gameModal.classList.contains('active')) return;
                     // 按下点在按钮上时，即使松开时偏出按钮，也不算翻面
                     if(performance.now() < (window.__suppressFlipUntil || 0)) return;
-                    if(e.target.closest('.card-btn')||e.target.closest('.reaction-item')) return;
+                    const onFrontBtn = e.target.closest('.card-btn') || e.target.closest('.reaction-item');
+                    // 已经是背面时，正面按钮被误点也不拦截，交回“翻回正面”
+                    if(onFrontBtn && !card.classList.contains('is-flipped')) return;
                     if(e.target.closest('.back-btn')||e.target.closest('.back-return')||e.target.closest('.back-actions')) return;
                     // 纯 CSS 3D 翻转：整卡旋转 180°，正反面靠 backface 切换
                     const inner = card.querySelector('.game-card-inner');
@@ -8730,7 +8734,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-flip1';
+        const BUILD_VERSION = '20261107-flip2';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
