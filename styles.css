@@ -5802,11 +5802,12 @@
             overflow: hidden; box-sizing: border-box;
             max-height: 0; opacity: 0; visibility: hidden;
             margin: 14px 8px 6px; padding-top: 14px; transform: translateY(8px);
+            pointer-events: none;
             transition:
-                max-height .3s cubic-bezier(.22,1,.36,1),
-                opacity .18s ease,
-                transform .3s cubic-bezier(.22,1,.36,1),
-                visibility 0s linear .3s;
+                max-height .22s cubic-bezier(.22,1,.36,1),
+                opacity .1s linear,
+                transform .18s ease,
+                visibility 0s linear 0s;
         }
         .sidebar .sidebar-social-title { display: block; }
         .sidebar .sidebar-social-row {
@@ -5820,7 +5821,8 @@
         .sidebar:hover .sidebar-social,
         body.sidebar-expanded .sidebar-social {
             max-height: 260px; opacity: 1; visibility: visible; transform: none;
-            transition-delay: 0s, .04s, 0s, 0s;
+            pointer-events: auto;
+            transition-delay: 0s, .03s, 0s, 0s;
         }
 
         /* 轻提示 */
