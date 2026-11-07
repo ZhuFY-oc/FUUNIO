@@ -7448,7 +7448,7 @@
                     item.addEventListener('click', handleReactionClick);
                 });
             });
-            spreadGamesLastRow();
+            if(!append) spreadGamesLastRow();
         }
 
         // 末行铺满：卡片宽度保持原样，把剩余空间平均分配给末行间距
@@ -8497,7 +8497,6 @@
         function updateLoadMoreBtn(total) {
             state.gamesTotal = total;
             document.getElementById('loadMore').style.display = state.displayedGames >= total ? 'none' : 'block';
-            spreadGamesLastRow();
         }
 
         function updateSidebarToggleLabel() {
@@ -8721,7 +8720,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-top2';
+        const BUILD_VERSION = '20261107-append1';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
