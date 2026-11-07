@@ -6502,6 +6502,11 @@
             }
             if(!targetPage) return;
 
+            // 切换页面后回到顶部，避免停留在上一页的中间位置
+            try { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); } catch(e) { window.scrollTo(0, 0); }
+            if(document.documentElement) document.documentElement.scrollTop = 0;
+            if(document.body) document.body.scrollTop = 0;
+
             const fromLogo = window.__lastNavSource === 'logo';
             const fromSidebar = window.__lastNavSource === 'sidebar';
             const fromOtherPage = page === 'home' && (state.__lastPage === 'interest' || state.__lastPage === 'creativeMarket');
@@ -8710,7 +8715,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-spread3';
+        const BUILD_VERSION = '20261107-top1';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
