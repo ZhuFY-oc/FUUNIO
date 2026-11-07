@@ -8668,7 +8668,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-sidebar2';
+        const BUILD_VERSION = '20261107-orig1';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
