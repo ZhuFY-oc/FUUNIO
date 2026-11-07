@@ -7438,43 +7438,7 @@
                     item.addEventListener('click', handleReactionClick);
                 });
             });
-            fillAllGameGrids();
         }
-
-        // 让最后一行卡片铺满整行，避免底部出现空缺
-        function fillGridLastRow(grid) {
-            if(!grid) return;
-            const items = Array.from(grid.children).filter(el => el && el.classList && !el.classList.contains('empty-state'));
-            items.forEach(el => {
-                el.style.gridColumn = '';
-                const thumb = el.querySelector ? el.querySelector('.game-thumb') : null;
-                if(thumb) thumb.style.height = '';
-            });
-            if(!items.length) return;
-            const tracks = (getComputedStyle(grid).gridTemplateColumns || '').split(' ').filter(Boolean).length;
-            const cols = tracks > 1 ? tracks : getGridColumns();
-            if(cols < 2) return;
-            const rem = items.length % cols;
-            if(!rem) return;
-            const extra = cols - rem;
-            const base = Math.floor(extra / rem);
-            const plus = extra % rem;
-            items.slice(items.length - rem).forEach((el, i) => {
-                el.style.gridColumn = 'span ' + (1 + base + (i < plus ? 1 : 0));
-            });
-        }
-
-        function fillAllGameGrids() {
-            const main = document.getElementById('gamesGrid');
-            if(main) fillGridLastRow(main);
-            document.querySelectorAll('.new-games-grid, .creative-market-grid').forEach(fillGridLastRow);
-        }
-
-        let __fillRowTimer = null;
-        window.addEventListener('resize', () => {
-            clearTimeout(__fillRowTimer);
-            __fillRowTimer = setTimeout(fillAllGameGrids, 120);
-        });
 
         function renderSkeletons(count=8) {
             let grid=document.getElementById('gamesGrid'); grid.innerHTML='';
@@ -7483,7 +7447,6 @@
                 d.innerHTML=`<div class="skeleton skeleton-thumb"></div><div class="skeleton-info"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-meta"></div></div>`;
                 grid.appendChild(d);
             }
-            fillGridLastRow(grid);
         }
 
         // 分类合并 + 一个游戏可属于多个分类
@@ -8705,7 +8668,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-sidebar1';
+        const BUILD_VERSION = '20261107-sidebar2';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
