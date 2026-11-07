@@ -7448,6 +7448,8 @@
             const items = Array.from(grid.children);
             items.forEach(el => { el.style.marginLeft = ''; });
             if(items.length < 2) return;
+            // 全部加载完成后不再铺满
+            if(state.gamesTotal && items.length >= state.gamesTotal) return;
             const cs = getComputedStyle(grid);
             const gap = parseFloat(cs.columnGap) || parseFloat(cs.gap) || 0;
             const rows = new Map();
@@ -7685,6 +7687,8 @@
         let lastGameCount = 0;
         function updateGameCount(n) {
             lastGameCount = n;
+            state.gamesTotal = n;
+            spreadGamesLastRow();
             const el = document.getElementById('sectionCount');
             if(!el) return;
             const unit = currentLang === 'en' ? ' games' : (currentLang === 'ja' ? ' 本' : ' 款');
@@ -8478,7 +8482,9 @@
         }
 
         function updateLoadMoreBtn(total) {
+            state.gamesTotal = total;
             document.getElementById('loadMore').style.display = state.displayedGames >= total ? 'none' : 'block';
+            spreadGamesLastRow();
         }
 
         function updateSidebarToggleLabel() {
@@ -8702,7 +8708,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-spread1';
+        const BUILD_VERSION = '20261107-spread2';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
