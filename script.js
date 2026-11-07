@@ -8477,14 +8477,15 @@
             safeOpenExternal(g.url);
         }
 
-        function loadMoreGames(evt) {
-            // 只接受真实用户点击，避免任何自动/程序化触发导致连续加载
-            if(!evt || evt.isTrusted === false) return;
+        function loadMoreGames(opts) {
+            const auto = !!(opts && opts.auto);
             if(state.isLoading) return;
             const now = Date.now();
-            if(now - (state.__lastLoadAt || 0) < 800) return;
+            if(now - (state.__lastLoadAt || 0) < (auto ? 260 : 800)) return;
             state.__lastLoadAt = now;
             state.isLoading = true;
+            // 记录加载前的滚动位置：自动加载完成后原样恢复，不跳动
+            const keepY = window.scrollY;
             let btn = document.querySelector('.load-more-btn'), orig = btn.textContent;
             btn.textContent = LANG[currentLang].loading;
             setTimeout(()=>{
@@ -8495,6 +8496,10 @@
                 loadReactions();
                 state.isLoading = false;
                 btn.textContent = orig;
+                if(auto) {
+                    window.scrollTo(0, keepY);
+                    setTimeout(maybeAutoLoadGames, 420);
+                }
             }, 400);
         }
 
@@ -8642,6 +8647,7 @@
             renderGames(games.slice(0,state.displayedGames));
             updateLoadMoreBtn(games.length);
             loadReactions();
+            setTimeout(maybeAutoLoadGames, 600);
             // 窗口宽度变化导致列数变化时，重新按整行对齐（只加不减）
             window.addEventListener('resize', () => {
                 clearTimeout(state.resizeTimer);
@@ -8710,14 +8716,21 @@
             const lastRect = cards[cards.length - 1].getBoundingClientRect();
             const viewportH = window.innerHeight || document.documentElement.clientHeight;
             if(lastRect.bottom > viewportH - 4) return; // 最后一张还没完全显示（或还在下方）
-            loadMoreGames();
+            loadMoreGames({ auto: true });
         }
 
-        // 已关闭「滚动自动加载」：只在用户点击「加载更多」时加载一批
-        window.__AUTO_LOAD_OFF__ = true;
+        // 滚动到底部自动加载（加载后保持滚动位置不变）
+        let autoLoadRaf = 0;
+        window.addEventListener('scroll', () => {
+            if(autoLoadRaf) return;
+            autoLoadRaf = requestAnimationFrame(() => {
+                autoLoadRaf = 0;
+                maybeAutoLoadGames();
+            });
+        }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-click1';
+        const BUILD_VERSION = '20261107-keep1';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
