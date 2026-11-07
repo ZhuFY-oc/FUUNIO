@@ -413,6 +413,7 @@
         .games-section { margin-bottom:32px; }
         .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
         .section-title { font-size:1.4rem; font-weight:700; }
+        .games-section, .games-grid { overflow-anchor: none; }
         .games-grid { --gcols:5; --ggap:20px; display:flex; flex-wrap:wrap; gap:var(--ggap); width:100%; }
         .games-grid > * { flex:0 0 calc((100% - (var(--gcols) - 1) * var(--ggap)) / var(--gcols)); max-width:calc((100% - (var(--gcols) - 1) * var(--ggap)) / var(--gcols)); box-sizing:border-box; }
 

@@ -6482,6 +6482,13 @@
             el.style.willChange = '';
         }
 
+        // 回到当前文档顶部（兼容滚动锚定造成的回弹）
+        function scrollPageTop() {
+            try { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); } catch(e) { window.scrollTo(0, 0); }
+            if(document.documentElement) document.documentElement.scrollTop = 0;
+            if(document.body) document.body.scrollTop = 0;
+        }
+
         function setActivePage(page) {
             state.currentPage = page;
             const targetPage = document.getElementById(PAGE_IDS[page]);
@@ -6503,9 +6510,7 @@
             if(!targetPage) return;
 
             // 切换页面后回到顶部，避免停留在上一页的中间位置
-            try { window.scrollTo({ top: 0, left: 0, behavior: 'auto' }); } catch(e) { window.scrollTo(0, 0); }
-            if(document.documentElement) document.documentElement.scrollTop = 0;
-            if(document.body) document.body.scrollTop = 0;
+            scrollPageTop();
 
             const fromLogo = window.__lastNavSource === 'logo';
             const fromSidebar = window.__lastNavSource === 'sidebar';
@@ -7715,6 +7720,7 @@
                 updateGameCount(games.length);
                 updateLoadMoreBtn(games.length);
                 loadReactions();
+                scrollPageTop();
             },200);
             if(window.innerWidth<=1024) toggleSidebar(false);
         }
@@ -8715,7 +8721,7 @@
         }, { passive: true });
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-top1';
+        const BUILD_VERSION = '20261107-top2';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
