@@ -8477,8 +8477,13 @@
             safeOpenExternal(g.url);
         }
 
-        function loadMoreGames() {
+        function loadMoreGames(evt) {
+            // 只接受真实用户点击，避免任何自动/程序化触发导致连续加载
+            if(!evt || evt.isTrusted === false) return;
             if(state.isLoading) return;
+            const now = Date.now();
+            if(now - (state.__lastLoadAt || 0) < 800) return;
+            state.__lastLoadAt = now;
             state.isLoading = true;
             let btn = document.querySelector('.load-more-btn'), orig = btn.textContent;
             btn.textContent = LANG[currentLang].loading;
@@ -8712,7 +8717,7 @@
         window.__AUTO_LOAD_OFF__ = true;
 
         // ==== 构建标记 + 旧缓存自动刷新 ====
-        const BUILD_VERSION = '20261107-load1';
+        const BUILD_VERSION = '20261107-click1';
         window.__FUUNIO_BUILD__ = BUILD_VERSION;
         console.log('%cFuunio build ' + BUILD_VERSION, 'color:#e0393e;font-weight:700');
 
