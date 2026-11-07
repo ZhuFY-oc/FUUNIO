@@ -67,6 +67,11 @@ h2{font-size:17px;margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid 
 .rel{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .rel a{font-size:13.5px;color:#33322e;background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 12px;text-decoration:none;text-align:center}
 .rel a:hover{border-color:#c9c6bd}
+.catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:12px 0 4px}
+.catgrid .card{display:flex;flex-direction:column;gap:5px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:var(--ink);transition:border-color .16s ease}
+.catgrid .card:hover{border-color:#c9c6bd}
+.catgrid .card-name{font-size:14.5px;font-weight:600;line-height:1.35}
+.catgrid .card-tags{font-size:12px;color:var(--muted)}
 .note{font-size:12.5px;color:var(--muted);line-height:1.9;margin-top:44px;border-top:1px solid var(--line);padding-top:14px}
 </style></head><body><div class="wrap">
 <div class="top"><a class="brand" href="/">FUUNIO</a><a class="back" href="/games/">← 全部游戏</a></div>
@@ -138,8 +143,67 @@ li span{display:block;font-size:12px;color:#8a8880;margin-top:4px}
 </div></body></html>`;
 fs.writeFileSync(path.join(ROOT, 'games', 'index.html'), listHtml);
 
+// 分类聚合页 /category/<key>/
+const CAT_INTRO = {
+  io: '浏览器里打开就能和真人同场对战的 .io 类小游戏，无需注册，进房间即可开局。',
+  casual: '上手即会、随时能停的休闲小游戏，适合碎片时间放松一把。',
+  action: '节奏紧凑、操作感强的动作类小游戏，键盘鼠标都能玩。',
+  shooting: '射击、弹幕与靶场类小游戏，考验反应和准度。',
+  survival: '在有限资源里活下去的生存类小游戏，考验规划与取舍。',
+  strategy: '需要动脑布局的策略类小游戏，塔防、经营、对弈都在这里。',
+  puzzle: '推箱子、消除、解谜等益智类小游戏，越玩越上头。',
+  racing: '竞速与驾驶类小游戏，追求极限圈速与漂移手感。'
+};
+const catKeys = Object.keys(CAT_INTRO).filter(k => games.some(g => g.category === k));
+const catUrls = [];
+for (const key of catKeys) {
+  const list = games.filter(g => g.category === key);
+  if (!list.length) continue;
+  const name = CAT[key] || key;
+  const url = SITE + '/category/' + key + '/';
+  const title = name + '小游戏在线玩（' + list.length + ' 款，免登录）| FUUNIO';
+  const desc = name + '类网页游戏合集，共 ' + list.length + ' 款，打开浏览器即玩，免登录、免下载。' + CAT_INTRO[key];
+  const jsonld = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: title,
+    url,
+    description: desc,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: list.length,
+      itemListElement: list.slice(0, 40).map((g, i) => ({
+        '@type': 'ListItem', position: i + 1,
+        name: g.name, url: SITE + '/games/' + g.id + '/'
+      }))
+    }
+  });
+  const cards = list.map(g =>
+    '<a class="card" href="/games/' + g.id + '/">' +
+    '<span class="card-name">' + esc(g.name) + '</span>' +
+    '<span class="card-tags">' + esc((g.tags || []).slice(0, 3).join(' · ')) + '</span></a>'
+  ).join('');
+  const others = catKeys.filter(k => k !== key)
+    .map(k => '<a href="/category/' + k + '/">' + esc(CAT[k]) + '</a>').join('');
+  const coverRaw = String(list[0].cover || '');
+  const coverUrl = SITE + '/' + (coverRaw.charAt(0) === '/' ? coverRaw.slice(1) : coverRaw);
+  const html = head(title, desc.slice(0, 150), url, coverUrl, jsonld) +
+    '<h1>' + esc(name) + '小游戏</h1>' +
+    '<div class="meta">共 ' + list.length + ' 款 · 免登录 · 即点即玩</div>' +
+    '<p class="desc">' + esc(CAT_INTRO[key]) + '</p>' +
+    '<h2>' + esc(name) + '游戏列表</h2>' +
+    '<div class="catgrid">' + cards + '</div>' +
+    '<h2>其他分类</h2><div class="rel">' + others + '</div>' +
+    '<p style="margin-top:22px"><a class="back" href="/games/">查看全部 ' + games.length + ' 款游戏 →</a></p>' +
+    foot;
+  const dir = path.join(ROOT, 'category', key);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'index.html'), html);
+  catUrls.push(url);
+}
+
 // sitemap
-const all = [SITE + '/', SITE + '/games/', ...urls];
+const all = [SITE + '/', SITE + '/games/', ...catUrls, ...urls];
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
   all.map((u, i) => `  <url><loc>${u}</loc><lastmod>${TODAY}</lastmod><changefreq>weekly</changefreq><priority>${i === 0 ? '1.0' : i === 1 ? '0.9' : '0.8'}</priority></url>`).join('\n') +
